@@ -1,6 +1,6 @@
-import './App.css';
 import { Outlet, useNavigate } from 'react-router-dom'
 import { useState, useEffect, createContext } from 'react';
+import './App.css';
 
 export const ProductSectionContext = createContext()
 
@@ -31,7 +31,7 @@ export default function App() {
       .catch((error) => console.log(error))
       // Show clear category button
       document.getElementById('clearCategoryFilter').style.display = 'block'
-      navigate('/product-by-category')
+      navigate('/product-filter')
     }
     else {
       fetch('/api/products/getProducts')

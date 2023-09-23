@@ -107,7 +107,6 @@ input:placeholder-shown {
 
 #productQuantityInCart {
     padding: 0.2em;
-    font-size: small;
     margin: auto;
     font-weight: bold;
     border: none;
@@ -115,8 +114,8 @@ input:placeholder-shown {
     position: absolute;
     top: 0;
     left: 55%;
-    height: 1.5em;
-    width: 1.5em;
+    height: 1.75em;
+    width: 1.75em;
     color: #FFFFFF;
     background-color: green;
     display: flex;
@@ -173,6 +172,7 @@ input:placeholder-shown {
     #searchResultsDisplay {
         width: 100%;
         left: 0;
+        border-radius: 10px;
     }
     
 }

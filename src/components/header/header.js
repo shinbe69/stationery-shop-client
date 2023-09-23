@@ -8,6 +8,7 @@ export default function Header() {
     const [cookie, setCookie, removeCookie] = useCookies()
     const [user, setUser] = useState('Đăng nhập')
     const [searchResults, setSearchResults] = useState([])
+    const [cartQuantity, setCartQuantity]  = useState(0)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -20,6 +21,16 @@ export default function Header() {
             document.getElementById('logout').style.display = 'none'
         }
     }, [cookie.user])
+
+    useEffect(() => {
+        if ((typeof cookie.cart) !== 'undefined') {
+            let countQuantity = 0
+            cookie.cart.forEach(singleOrder => {
+                countQuantity += singleOrder.quantity
+            })
+            setCartQuantity(countQuantity)
+        }
+    }, [cookie.cart])
 
     useEffect(() => {
         document.getElementById('searchResultsDisplay').style.display = 'block'
@@ -66,18 +77,18 @@ export default function Header() {
 
     function handleSearchResultClick(result) {
         // navigate('/product', { state: result })
-        fetch('/api/products/getSpecificProduct', {
+        fetch('/api/products/getProductsById', {
             method: 'POST',
             headers: {
                 "Accept": 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ productID: result.id })
+            body: JSON.stringify({ productID: [result.id] })
         })
         .then(product => product.json())
         .then(product => {
             document.getElementById('searchResultsDisplay').style.display = 'none'
-            navigate('/product', { state: product})
+            navigate('/product', { state: product[0]})
         })
         .catch(err => console.log(err))
     }
@@ -86,8 +97,23 @@ export default function Header() {
         if (event.key === 'Escape')
             document.getElementById('searchResultsDisplay').style.display = 'none'
         else if (event.key === 'Enter') {
+            let idArr = []
+            searchResults.forEach(result => {
+                idArr.push(result.id)
+            })
             document.getElementById('searchResultsDisplay').style.display = 'none'
-            navigate('/signup')
+            fetch('/api/products/getProductsById', {
+                method: 'POST',
+                headers: {
+                    "Accept": 'application/json',
+                    'Content-Type': 'application/json'   
+                },
+                body: JSON.stringify({ productID: idArr})
+            }).then(products => products.json())
+            .then(products => {
+                navigate('/product-filter', { state: products, replace: true })
+            })
+            .catch(err => console.log(err))
         }
     }
 
@@ -101,16 +127,16 @@ export default function Header() {
                 </input>
                 <div id='searchResultsDisplay'>
                     {searchResults.map(result => (
-                        <div onClick={() => handleSearchResultClick(result) }>
+                        <div onClick={() => handleSearchResultClick(result) } key={result.id}>
                             <img src='search.png' alt='searchIcon'/>
-                            <p >{result.name} </p>
+                            <p><i>{result.name}</i></p>
                         </div>
                     ))}
                 </div>
             </div>
             <div id='userInfo'>
                 <div id='cart'>
-                    <p id='productQuantityInCart'>5</p>
+                    <p id='productQuantityInCart'>{ cartQuantity }</p>
                     <img src='cart.png' alt='cart' />
                 </div>
                 <div id='user'>

@@ -1,10 +1,23 @@
 import { useLocation } from 'react-router-dom'
-import './productPage.css'
 import { useState } from 'react'
+import { useCookies } from 'react-cookie'
+import './productPage.css'
 
 export default function ProductPage() {
     const product = useLocation()
+    const [cookie, setCookie, removeCookie] = useCookies()
     const [quantity, selectQuantity] = useState(1)
+
+    function handleAddToCart() {
+        if (typeof cookie.cart === 'undefined') {
+            setCookie('cart', [{id: product.state.id, quantity}], { maxAge: 60*60*24 })
+        }
+        else {
+            cookie.cart.push({id: product.state.id, quantity})
+            setCookie('cart', cookie.cart, { maxAge: 60*60*24 })
+        }
+        console.log(cookie.cart)
+    }
 
     return (
         <div id="productPage" >
@@ -25,9 +38,9 @@ export default function ProductPage() {
                             <p >+</p>
                         </div>
                     </div>
-                    <div id='addToCartButton'>
+                    <div id='addToCartButton' onClick={ handleAddToCart }>
                         <img src="add-to-cart.png" alt="add-to-cart" style={{ margin: 'auto' }} />
-                        <p style={{ whiteSpace: 'nowrap', margin: 'auto', color: '#FFFFFF' }}><b>Thêm vào giỏ hàng</b></p>
+                        <p style={{ whiteSpace: 'nowrap', margin: 'auto', color: '#FFFFFF' }} ><b>Thêm vào giỏ hàng</b></p>
                     </div>
                 </div>
                 <div id='specificInfo'>
