@@ -34,33 +34,9 @@ code {
     monospace;
 }
 
-#banner {
-  height: 2rem;
-  overflow: hidden;
-  background-color: #F8F0E5;
-  display: flex;
-  animation-name: fadeIn;
-  animation-duration: 1s;
-}
-
-#banner h4 {
-  white-space: nowrap;
-  margin: auto;
-  animation-name: movingText;
-  animation-iteration-count: infinite;
-  animation-duration: 35s;
-  animation-timing-function: linear;
-}
-
-@keyframes movingText {
-  from { transform: translateX(100vw); }
-  to { transform: translateX(-100vw); }
-}
-
 #header {
-  position: -webkit-sticky;
   position: sticky;
-  top: 0;
+  top: 0px;
   z-index: 3;
   background-color: rgb(255, 255, 255, 0.5);
   -webkit-backdrop-filter: blur(5px);
@@ -71,13 +47,17 @@ code {
   padding: 0 10rem;
 }
 
-#app {
-  /* min-height: calc(75% - 2em); */
-  min-height: 75%;
+#app, #dashboard {
+  min-height: 90%;
   padding: 1rem 0;
 }
 
+#about {
+  min-height: 75%;
+}
+
 #footer {
+  width: 100%;
   background-color: #F8F0E5;
   min-height: 15%;
   padding: 1rem 2rem;
@@ -107,21 +87,11 @@ a {
   #header {
     padding: 0;
   }
-  #app {
-    margin: 0;
-  }
-  #footer {
-    padding: 1rem 0;
-  }
 }
 
 @media screen and (max-width: 480px) {
   body {
     font-size: medium;
-  }
-
-  #header {
-    padding: 0;
   }
 
   #app {
@@ -133,9 +103,5 @@ a {
   #footer {
     height: 35%;
     padding: 0;
-  }
-
-  #banner h4 {
-    animation-duration: 15s;
   }
 }

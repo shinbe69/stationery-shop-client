@@ -1,9 +1,13 @@
 import { useContext, useState} from 'react'
-import {useNavigate} from 'react-router-dom'
-import { MessageContext } from '../login/login'
+import {useLocation, useNavigate} from 'react-router-dom'
+import { useCookies } from 'react-cookie'
+import { MessageContext } from '../../AppContainer'
+import { showPopup } from '../popup/popup'
 
 export default function LoginForm() {
+    const location = useLocation()
     const navigate = useNavigate()
+    const [cookie, setCookie, removeCookie] = useCookies()
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
     const [message, setMessage] = useContext(MessageContext)
@@ -27,10 +31,11 @@ export default function LoginForm() {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json'
                 },
-                body: JSON.stringify({username: username, password: password})})
+                body: JSON.stringify({username: username, password: password})
+            })
             .then((response) => {
                 if (response.status === 200) {
-                    document.location = '/'
+                    navigate('/')
                 }
                 else {
                     setMessage('Tên đăng nhập hoặc mật khẩu không đúng!')
@@ -53,19 +58,16 @@ export default function LoginForm() {
         }
     }
 
-
-    function showPopup() {
-        document.getElementById('warningPopup').style.transform = 'translateY(-10vh)'
-        setTimeout(() => {
-            document.getElementById('warningPopup').style.transform = 'translateY(-50vh)'
-        }, 2500)
+    function handleOnKeyDown(event) {
+        if (event.key === 'Enter')
+            handleLogin(event)
     }
 
     return (
         <form id='loginForm' className='form'>
-            <input type='text' name='username' onChange={handleChange} placeholder='Email hoặc số điện thoại' value={ username } />
-            <input type='password' name='password' onChange={handleChange} placeholder='Mật khẩu' value={ password } />
-            <input id='submitLogin' disabled={ !(username !== "" && password !== "") } onClick={ handleLogin } type='submit' value='Đăng nhập'/>
+            <input type='text' name='username' onChange={handleChange} placeholder='Email hoặc số điện thoại' value={ username } onKeyDown={ handleOnKeyDown } />
+            <input type='password' name='password' onChange={handleChange} placeholder='Mật khẩu' value={ password } onKeyDown={ handleOnKeyDown }/>
+            <p id='submitLogin' disabled={ !(username !== "" && password !== "") } onClick={ handleLogin }>Đăng nhập</p>
             <p id='register' onClick={() => navigate('/signup') } >Tạo tài khoản mới</p>
             <p id='forgotPassword'>Quên mật khẩu?</p>
         </form>

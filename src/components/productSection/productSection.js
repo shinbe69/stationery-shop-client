@@ -11,7 +11,7 @@ export default function ProductSection() {
     return (
         <div id='productSection'>
             { (productsFromNavigate || productsFromContext).map(product => (
-                <Product id={product._id} key={product._id} thumnail={product.thumnail} name={product.name} description={product.description} additionalInfo={product.additionalInfo} price={product.price} />
+                <Product id={product._id} key={product._id} thumnail={product.thumnail} name={product.name} description={product.description} additionalInfo={product.additionalInfo} price={product.price} quantity={product.quantity}/>
             ))}
         </div>
     )

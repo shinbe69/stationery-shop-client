@@ -3,20 +3,21 @@
     display: flex;
     z-index: 5;
     padding: 0 2em;
-    height: 15vh;
+    height: 8vh;
     width: calc(15vw/0.75);
     top: 1em;
     left: calc((100vw - (15vw/0.75))/2);
     transform: translateY(-50vh);
     border-radius: 15px;
     margin: auto;
-    background-color: rgb(255, 15, 15, 0.7);
+    background-color: rgb(255, 15, 15);
     color: #ffffff;
     font-weight: bold;
     -webkit-backdrop-filter: blur(4px);
     backdrop-filter: blur(4px);
     transition-property: all;
     transition-duration: 0.6s;
+    
   }
   
   #warningPopup p {

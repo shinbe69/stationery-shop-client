@@ -1,6 +1,7 @@
 import { useContext, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import { MessageContext } from '../login/login'
+import { MessageContext } from '../../AppContainer'
+import { showPopup } from '../popup/popup'
 
 export default function SignupForm() {
     const navigate = useNavigate()
@@ -65,19 +66,17 @@ export default function SignupForm() {
         navigate('/login')
     }
 
-    function showPopup() {
-        document.getElementById('warningPopup').style.transform = 'translateY(-10vh)'
-        setTimeout(() => {
-            document.getElementById('warningPopup').style.transform = 'translateY(-50vh)'
-        }, 2500)
+    function handleOnKeyDown(event) {
+        if (event.key === 'Enter')
+            handleSignup(event)
     }
 
     return (
             <form id='signupForm' className='form'>
-                <input type='text' name='username' onChange={handleChange} placeholder='Email hoặc số điện thoại' value={ username }/>
-                <input type='password' name='password' onChange={handleChange} placeholder='Mật khẩu' value={ password }/>
-                <input id='re-enterPassword' type='password' name='password1' onChange={handleChange} placeholder='Nhập lại mật khẩu'/>
-                <input id='register' disabled={  !(username !== "" && password !== "" && reEnterPassword !== "") } onClick={ handleSignup } type='submit' value='Tạo tài khoản mới'/>
+                <input type='text' name='username' onChange={handleChange} onKeyDown={ handleOnKeyDown } placeholder='Email hoặc số điện thoại' value={ username }/>
+                <input type='password' name='password' onChange={handleChange} onKeyDown={ handleOnKeyDown } placeholder='Mật khẩu' value={ password }/>
+                <input id='re-enterPassword' type='password' name='password1' onChange={handleChange} onKeyDown={ handleOnKeyDown } placeholder='Nhập lại mật khẩu'/>
+                <p id='register' disabled={  !(username !== "" && password !== "" && reEnterPassword !== "") } onClick={ handleSignup }>Tạo tài khoản mới</p>
                 <p id='forgotPassword'>Quên mật khẩu?</p>
                 <img id='back2Login' onClick={ handleBackButton } src='back.png' alt='back'/>
             </form>

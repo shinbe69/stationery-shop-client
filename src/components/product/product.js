@@ -10,7 +10,7 @@ export default function Product(props) {
     }
 
     function addToCart() {
-        console.log(props.id)
+        
     }
 
     return(
@@ -22,7 +22,6 @@ export default function Product(props) {
                 <p>{ props.name }</p>
                 <p style={{ color: '#FF9B9B' }} ><b>{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(props.price) }</b></p>
             </div>
-            <img id="addToCart" src="add-to-cart.png" alt="add-to-cart" onClick={ addToCart }/>
         </div>
     )
 }

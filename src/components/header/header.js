@@ -1,36 +1,50 @@
 import { useCookies } from 'react-cookie'
-import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import './header.css'
+import { showPopup } from '../popup/popup'
+import Protected from '../protected/protected'
 
 
 export default function Header() {
     const [cookie, setCookie, removeCookie] = useCookies()
     const [user, setUser] = useState('Đăng nhập')
     const [searchResults, setSearchResults] = useState([])
-    const [cartQuantity, setCartQuantity]  = useState(0)
+    const [cartQuantity, setCartQuantity] = useContext(CartQuantityContext)
+    const [cart, setCart] = useContext(CartContext)
+    const [message, setMessage] = useContext(MessageContext)
     const navigate = useNavigate()
+    const location = useLocation()
 
     useEffect(() => {
         if ((typeof cookie.user) !== 'undefined') {
+            fetch('/api/users/addToCart', {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: cookie.user, cart: []})
+            })
+            .then(res => res.json())
+            .then((cart) => {
+                setCart(cart)
+            })
+            .catch(error => console.log(error))
             setUser((cookie.user).substring(0, 7) + '...')
             document.getElementById('logout').style.display = 'block'
         }
         else {
-            setUser('Đăng nhập')
             document.getElementById('logout').style.display = 'none'
+            setUser('Đăng nhập')
+            setCart([])
         }
     }, [cookie.user])
 
     useEffect(() => {
-        if ((typeof cookie.cart) !== 'undefined') {
-            let countQuantity = 0
-            cookie.cart.forEach(singleOrder => {
-                countQuantity += singleOrder.quantity
-            })
-            setCartQuantity(countQuantity)
-        }
-    }, [cookie.cart])
+        setCartQuantity(cart.totalQuantity || 0)
+    }, [cart])
 
     useEffect(() => {
         document.getElementById('searchResultsDisplay').style.display = 'block'
@@ -47,7 +61,9 @@ export default function Header() {
         .then((response) => {
             if (response.status === 200) {
                 removeCookie('user')
+                removeCookie('isAdmin')
                 document.body.style.animationName = 'fadeIn'
+                navigate('/../')
             }
             else {
                 console.log('Logout failed!!')
@@ -88,7 +104,7 @@ export default function Header() {
         .then(product => product.json())
         .then(product => {
             document.getElementById('searchResultsDisplay').style.display = 'none'
-            navigate('/product', { state: product[0]})
+            navigate('/../product', { state: product[0]})
         })
         .catch(err => console.log(err))
     }
@@ -117,6 +133,41 @@ export default function Header() {
         }
     }
 
+    function handleCartClick() {
+        if (typeof cookie.user !== 'undefined') {
+            let idArr = []
+            cart.cartItems.forEach(item => {
+                idArr.push(item.id)
+            })
+
+            fetch('/api/products/getProductsById', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productID: idArr })
+            }).then(res => res.json())
+            .then(products => {
+                products.forEach((product) => {
+                    cart.cartItems.forEach(item => {
+                        if (item.id === product._id)
+                            product.cartQuantity = item.quantity
+                    })
+                })
+                navigate('/cart-manage', {
+                    state: products
+                })
+            })
+            .catch(error => console.log(error))
+        }
+        else {
+            navigate('/login')
+            setMessage('Bạn vui lòng đăng nhập để xem giỏ hàng')
+            showPopup()
+        }
+    }
+
     return (
         <div id="header">
             <div id='logo'>
@@ -135,7 +186,7 @@ export default function Header() {
                 </div>
             </div>
             <div id='userInfo'>
-                <div id='cart'>
+                <div id='cart' onClick={ handleCartClick }>
                     <p id='productQuantityInCart'>{ cartQuantity }</p>
                     <img src='cart.png' alt='cart' />
                 </div>

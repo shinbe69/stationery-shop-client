@@ -1,9 +1,8 @@
 #login {
     display: flex;
-    position: relative;
     background-image: url(https://c1.wallpaperflare.com/path/433/716/11/sky-travel-snow-statue-db4c23ff6bbaf59c69b383d0b7e5ec22.jpg);
     background-size: cover;
-    height: 100%;
+    height: 75%;
 }
 
 #login * {
@@ -35,6 +34,9 @@
     border: none;
     border-radius: 10px;
     outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #submitLogin {

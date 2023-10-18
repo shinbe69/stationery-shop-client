@@ -1,22 +1,43 @@
-import { useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useContext, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
+import { showPopup, selectTypeOfPopup } from '../popup/popup'
 import './productPage.css'
 
 export default function ProductPage() {
+    const navigate = useNavigate()
     const product = useLocation()
     const [cookie, setCookie, removeCookie] = useCookies()
     const [quantity, selectQuantity] = useState(1)
+    const [cartQuantity, setCartQuantity] = useContext(CartQuantityContext)
+    const [cart, setCart] = useContext(CartContext)
+    const [message, setMessage] = useContext(MessageContext)
 
     function handleAddToCart() {
-        if (typeof cookie.cart === 'undefined') {
-            setCookie('cart', [{id: product.state.id, quantity}], { maxAge: 60*60*24 })
+        if (typeof cookie.user !== 'undefined') {
+            fetch('/api/users/addToCart', {
+                method: 'PATCH',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username: cookie.user, cart: [{id: product.state.id, quantity}]})
+            }).then(result => result.json())
+            .then(cart => {
+                setCartQuantity(cart.totalQuantity)
+                setCart(cart)
+                selectTypeOfPopup('SUCCESS')
+                setMessage('Thêm vào giỏ thành công')
+                showPopup()
+            })
+            .catch(error => console.log(error))
         }
         else {
-            cookie.cart.push({id: product.state.id, quantity})
-            setCookie('cart', cookie.cart, { maxAge: 60*60*24 })
+            navigate('/login')
+            setMessage('Bạn vui lòng đăng nhập để thêm vào giỏ hàng')
+            showPopup()
         }
-        console.log(cookie.cart)
     }
 
     return (
@@ -40,7 +61,7 @@ export default function ProductPage() {
                     </div>
                     <div id='addToCartButton' onClick={ handleAddToCart }>
                         <img src="add-to-cart.png" alt="add-to-cart" style={{ margin: 'auto' }} />
-                        <p style={{ whiteSpace: 'nowrap', margin: 'auto', color: '#FFFFFF' }} ><b>Thêm vào giỏ hàng</b></p>
+                        <p style={{ whiteSpace: 'nowrap', margin: 'auto' }} ><b>Thêm vào giỏ hàng</b></p>
                     </div>
                 </div>
                 <div id='specificInfo'>
@@ -50,6 +71,7 @@ export default function ProductPage() {
                     <p style={{ color: '#FF9B9B' }}><label style={{ color: '#999' }}>Giá:</label> &ensp;
                         <b>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.state.price) }</b>
                     </p>
+                    <h4 style={{ border: '1px solid #D8D9DA', borderRadius: '0.3em', width: 'fit-content', height: 'fit-content', padding: '0.5em', color: '#FFFFFF', backgroundColor:  product.state.quantity > 0 ? '#00C851' : '#F05E16' }}>{ product.state.quantity > 0 ? 'Còn hàng' : 'Tạm hết hàng'}</h4>
                 </div>
             </div>
             <div className='seperator'>
