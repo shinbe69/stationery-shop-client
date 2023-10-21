@@ -78,7 +78,7 @@ export default function Item({ product }) {
     return (
         <div id="cartItem">
             <div id="itemThumnail">
-                <img src={ product.thumnail } />
+                <img src={ product.thumnail } alt='thumnail'/>
             </div>
             <p style={{ width: '35%'}}>{ product.name }</p>
             <h4 id="unitPrice" >{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price) }</h4>

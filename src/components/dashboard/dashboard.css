@@ -39,7 +39,6 @@
     border: 1px solid #D8D9DA;
     font-size: large;
     padding: 1em;
-    
 }
 
 select {
@@ -112,7 +111,6 @@ select {
     padding: 1rem 3rem;
     height: 3rem;
     width: fit-content;
-    margin: auto;
     border: none;
     border-radius: 10px;
     outline: none;

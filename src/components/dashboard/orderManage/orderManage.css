@@ -1,0 +1,68 @@
+#orderManage {
+    padding: 0 1em;
+}
+
+#orderContainer {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 2rem;
+    row-gap: 2rem;
+}
+
+.order {
+    font-size: medium;
+    height: 30vh;
+    border-radius: 0.25em;
+    background-color: #efe5d5;
+    display: flex;
+    background-image: linear-gradient(135deg, #fff 50%, transparent 50%), linear-gradient(45deg, #fff 50%, transparent 50%);
+    background-position: top left, top left, top right, top right;
+    background-size: 30px 30px;
+    background-repeat: repeat-y;
+}
+
+.seperateLineOrder {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 5px;
+}
+
+.orderInfo {
+    padding-left: 1em;
+    width: 80%;
+    position: relative;
+}
+
+.orderInfoItem {
+    height: fit-content;
+    padding: 0.25em 0;
+    display: flex;
+    overflow: hidden;
+}
+
+.orderInfoItem label{
+    margin-right: 1em;
+}
+
+.orderQuickAction {
+    position: absolute;
+    bottom: 0.1em;
+    left: 0;
+    width: 100%;
+    display: flex;
+}
+
+.orderQuickAction button{
+    margin: 0 0.25em;
+    font-size: 1em;
+    padding: 0.25em 1em;
+    border-radius: 0.25em;
+    border: 1px solid #48b42c;
+    outline: none;
+}
+
+.orderQuickAction button:hover{
+    cursor: pointer;
+    background-color: #00C851;
+}

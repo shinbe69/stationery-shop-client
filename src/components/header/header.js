@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import './header.css'
-import { showPopup } from '../popup/popup'
+import { selectTypeOfPopup, showPopup } from '../popup/popup'
 import Protected from '../protected/protected'
 
 
@@ -163,6 +163,7 @@ export default function Header() {
         }
         else {
             navigate('/login')
+            selectTypeOfPopup('WARNING')
             setMessage('Bạn vui lòng đăng nhập để xem giỏ hàng')
             showPopup()
         }

@@ -18,17 +18,19 @@ export default function Dashboard() {
                     <hr style={{ margin: '0 1rem' }} />
                     <p>Thêm sản phẩm mới</p>
                 </div>
-                <div className='categoryItem'>
-                    <img src='./new-blog.png' alt="category item" />
+                <div className='categoryItem' onClick={() => navigate('/add-new-category', {
+                    state: cookie.isAdmin
+                })} >
+                    <img src='./new-category.png' alt="category item" />
                     <hr style={{ margin: '0 1rem' }} />
-                    <p>Tạo bài viết mới</p>
+                    <p>Tạo danh mục mới</p>
                 </div>
-                <div className='categoryItem' onClick={() => navigate('/pending-order', {
+                <div className='categoryItem' onClick={() => navigate('/order-manage', {
                     state: cookie.isAdmin
                 })}>
                     <img src='./pending-order.png' alt="category item" />
                     <hr style={{ margin: '0 1rem' }} />
-                    <p>Đơn hàng đang chờ xác nhận</p>
+                    <p>Quản lý đơn hàng</p>
                 </div>
             </div>
             <hr style={{ margin: '0 1em' }} />

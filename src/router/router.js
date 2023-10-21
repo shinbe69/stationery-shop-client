@@ -6,14 +6,18 @@ import ProductSection from '../components/productSection/productSection'
 import App from '../App'
 import Login from '../components/login/login'
 import LoginForm from '../components/loginForm/loginForm'
-import SignupForm from '../components/signupForm/signupForm'
-import Header from '../components/header/header';
+import SignupForm from '../components/login/signupForm/signupForm'
 import CartManage from '../components/cartManage/cartManage'
 import Blog from '../components/blog/blog'
 import Protected from '../components/protected/protected'
 import Dashboard from '../components/dashboard/dashboard'
 import AppContainer from '../AppContainer'
 import AddNewProduct from '../components/dashboard/addNewProduct/addNewProduct'
+import UpdateUserInfo from '../components/updateUserInfo/updateUserInfo'
+import CheckoutPage from '../components/checkoutPage/checkoutPage'
+import OnlyForwarded from '../components/onlyForwarded/onlyForwarded'
+import OrderManage from '../components/dashboard/orderManage/orderManage'
+import AddNewCategory from '../components/dashboard/addNewCategory/addNewCategory'
 
 const router = createBrowserRouter([
     {
@@ -48,6 +52,23 @@ const router = createBrowserRouter([
                             //Blog
                             path: "/blog",
                             element: <Blog />
+                        },
+                        {
+                            //Update user info
+                            path: 'update-user-info',
+                            element: <OnlyForwarded>
+                                <UpdateUserInfo />
+                            </OnlyForwarded>,
+                            loader: async () => {
+                                return fetch('https://vapi.vnappmob.com/api/province/')
+                            }
+                        },
+                        {
+                            //Checkout
+                            path: '/checkout',
+                            element: <OnlyForwarded>
+                                        <CheckoutPage />
+                                    </OnlyForwarded>
                         }
                     ]
                 },
@@ -75,12 +96,16 @@ const router = createBrowserRouter([
                             </Protected>,
                     children: [
                         {
-                            path: '/pending-order',
-                            element: <h2>Orders</h2>
+                            path: '/order-manage',
+                            element: <OrderManage />
                         },
                         {
                             path: '/add-new-product',
                             element: <AddNewProduct />
+                        },
+                        {
+                            path: '/add-new-category',
+                            element: <AddNewCategory />
                         }
                     ]
                 },

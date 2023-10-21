@@ -35,6 +35,7 @@ export default function ProductPage() {
         }
         else {
             navigate('/login')
+            selectTypeOfPopup('WARNING')
             setMessage('Bạn vui lòng đăng nhập để thêm vào giỏ hàng')
             showPopup()
         }

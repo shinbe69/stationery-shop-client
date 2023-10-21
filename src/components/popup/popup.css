@@ -2,8 +2,8 @@
     position: absolute;
     display: flex;
     z-index: 5;
-    padding: 0 2em;
-    height: 8vh;
+    padding: 1em 2em;
+    height: fit-content;
     width: calc(15vw/0.75);
     top: 1em;
     left: calc((100vw - (15vw/0.75))/2);

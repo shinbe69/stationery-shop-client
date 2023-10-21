@@ -13,6 +13,11 @@ export default function App() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    document.body.scrollTop = 0
+    document.documentElement.scrollTop = 0
+  })
+
+  useEffect(() => {
     fetch('/api/getCategories')
     .then(res => res.json())
     .then(categories => setCategories(categories))
@@ -51,7 +56,7 @@ export default function App() {
   }
 
   function handleShowDashboard() {
-    navigate('/pending-order', {
+    navigate('/order-manage', {
       state: cookie.isAdmin
     })
   }

@@ -17,6 +17,7 @@ export function showPopup() {
 
 export function selectTypeOfPopup(type) {
     switch (type) {
+        case 'WARNING':
         default:
             document.getElementById('warningPopup').style.backgroundColor = 'rgb(255, 15, 15)'
             break

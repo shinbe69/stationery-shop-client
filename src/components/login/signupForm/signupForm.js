@@ -1,7 +1,7 @@
 import { useContext, useState} from 'react'
 import {useNavigate} from 'react-router-dom'
-import { MessageContext } from '../../AppContainer'
-import { showPopup } from '../popup/popup'
+import { MessageContext } from '../../../AppContainer'
+import { showPopup, selectTypeOfPopup } from '../../popup/popup'
 
 export default function SignupForm() {
     const navigate = useNavigate()
@@ -14,10 +14,17 @@ export default function SignupForm() {
     function handleSignup(event) {
         event.preventDefault()
         if (!username.includes('@') && !username.includes('0')) {
+            selectTypeOfPopup('WARNING')
             setMessage('Vui lòng nhập email hoặc số điện thoại hợp lệ!')
             showPopup()
         }
+        else if (!username.includes('@') && username.length !== 10) {
+            selectTypeOfPopup('WARNING')
+            setMessage('Vui lòng nhập số điện thoại hợp lệ!')
+            showPopup()
+        }
         else if (password.length < 6) {
+            selectTypeOfPopup('WARNING')
             setMessage('Mật khẩu phải có ít nhất 6 ký tự!')
             showPopup()
         }
@@ -30,15 +37,42 @@ export default function SignupForm() {
                             'Content-Type': 'application/json',
                             'Accept': 'application/json'
                         },
-                        body: JSON.stringify({username: username, password: password, reEnterPassword: reEnterPassword})
-                        }).then((response) => {
-                            if (response.status === 200) {
-                                navigate('/')
-                            }
-                            else if (response.status === 409){
-                                setMessage('Tài khoản đã tồn tại trong hệ thống!')
+                        body: JSON.stringify({username, password, reEnterPassword: reEnterPassword})
+                        })
+                        .then(res => {
+                            if (res.status === 409) {
+                                selectTypeOfPopup('WARNING')
+                                setMessage('Tài khoản đã tồn tại trong hệ thống')
                                 showPopup()
+                                return
                             }
+                            else if (res.status === 500) {
+                                selectTypeOfPopup('WARNING')
+                                setMessage('Có lỗi xảy ra ở hệ thống, vui lòng thử lại')
+                                showPopup()
+                                return
+                            }
+                            else res.json()
+                        })
+                        .then((user) => {
+                                fetch('/api/auth/login', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                        'Accept': 'application/json'
+                                    },
+                                    body: JSON.stringify({username, password})
+                                })
+                                .then((response) => {
+                                    if (response.status === 200) {
+                                        navigate('/update-user-info', {
+                                            state: username
+                                        })
+                                    }
+                                })
+                                .catch((err) => {
+                                    console.log(err)
+                                })
                         })
                 }
                 else {

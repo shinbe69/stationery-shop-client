@@ -1,8 +1,10 @@
 import { useContext, useEffect, useState } from "react"
 import { MessageContext } from "../../../AppContainer"
 import { showPopup, selectTypeOfPopup } from "../../popup/popup"
+import { useNavigate } from "react-router-dom"
 
 export default function AddNewProduct() {
+    const navigate = useNavigate()
     const [message, setMessage] = useContext(MessageContext)
     const [thumnail, setThumnail] = useState('')
     const [categories, setCategories] = useState([])
@@ -79,6 +81,9 @@ export default function AddNewProduct() {
                 setMessage('Thêm sản phẩm thành công')
                 selectTypeOfPopup('SUCCESS')
                 showPopup()
+                setTimeout(() => {
+                    navigate('/')
+                }, 700)
             })
             .catch(err => console.log(err))
         }
