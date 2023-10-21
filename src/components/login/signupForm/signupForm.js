@@ -52,9 +52,8 @@ export default function SignupForm() {
                                 showPopup()
                                 return
                             }
-                            else res.json()
-                        })
-                        .then((user) => {
+                            else {
+                                let user = res.json()
                                 fetch('/api/auth/login', {
                                     method: 'POST',
                                     headers: {
@@ -73,6 +72,7 @@ export default function SignupForm() {
                                 .catch((err) => {
                                     console.log(err)
                                 })
+                            }
                         })
                 }
                 else {
