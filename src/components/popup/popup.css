@@ -1,7 +1,7 @@
 #warningPopup {
     position: absolute;
     display: flex;
-    z-index: 5;
+    z-index: 6;
     padding: 1em 2em;
     height: fit-content;
     width: calc(15vw/0.75);

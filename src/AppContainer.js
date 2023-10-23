@@ -12,7 +12,7 @@ export const MessageContext = createContext()
 
 export default function AppContainer() {
     const [cartQuantity, setCartQuantity] = useState(0)
-    const [cart, setCart] = useState([])
+    const [cart, setCart] = useState({ cartItems: [], totalQuantity: 0 })
     const [message, setMessage] = useState("")
 
   return (

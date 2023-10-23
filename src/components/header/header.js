@@ -1,5 +1,5 @@
 import { useCookies } from 'react-cookie'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import './header.css'
@@ -38,7 +38,7 @@ export default function Header() {
         else {
             document.getElementById('logout').style.display = 'none'
             setUser('Đăng nhập')
-            setCart([])
+            setCart({ cartItems: [], totalQuantity: 0 })
         }
     }, [cookie.user])
 

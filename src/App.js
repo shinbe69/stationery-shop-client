@@ -1,16 +1,19 @@
 import { Outlet, useNavigate } from 'react-router-dom'
-import { useState, useEffect, createContext } from 'react';
+import { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { useCookies } from 'react-cookie';
+import { CartContext } from './AppContainer';
 import './App.css';
 
 export const ProductSectionContext = createContext()
 
 export default function App() {
+  const [cart ,serCart] = useContext(CartContext)
   const [cookie, setCookie, removeCookie] = useCookies()
   const [categories, setCategories] = useState([])
   const [selection, setSelection] = useState('')
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
+  const second = useRef(0)
 
   useEffect(() => {
     document.body.scrollTop = 0

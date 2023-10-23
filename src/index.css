@@ -37,7 +37,7 @@ code {
 #header {
   position: sticky;
   top: 0px;
-  z-index: 3;
+  z-index: 5;
   background-color: rgb(255, 255, 255, 0.5);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
@@ -57,10 +57,9 @@ code {
 }
 
 #footer {
+  background-color: #F6F4EB;
   width: 100%;
-  background-color: #F8F0E5;
-  min-height: 15%;
-  padding: 1rem 2rem;
+  min-height: 20%;
 }
 
 a {
