@@ -3,21 +3,19 @@
     position: relative;
 }
 
-.sideMenu {
+#sideMenu {
+    border-radius: 0.5em;
+    z-index: 4;
     width: 20%;
-    height: fit-content;
-    margin: 0 1rem;
+    height: 95%;
     transition-property: all;
-    transition-duration: 0.5s;
+    transition-duration: 0.4s;
+}
+
+.categoryContainer {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     display: grid;
     grid-template-rows: auto;
-}
-
-#adminSideMenu {
-    display: none;
-}
-
-#categoryContainer {
     border-radius: 10px;
     background-color: #EEEEEE;
 }
@@ -32,36 +30,14 @@
     border-radius: 10px;
     background-color: #f5f5f0;
     margin-top: 2em;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 
 #adminAction {
     border-radius: 10px;
     background-color: #f5f5f0;
-}
-
-#sideMenuSwitch {
-    display: none;
-    position: fixed;
-    margin-top: 1em;
-    top: 10vh;
-    left: 0.5em;
-    height: 1.5em;
-    width: 1.5em;
-    padding: 0;
-    border-radius: 10px;
-    z-index: 5;
-}
-
-#sideMenuSwitch:hover {
-    cursor: pointer;
-    background-color: #D8D9DA;
-}
-
-#sideMenuSwitch img{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    
 }
 
 .categoryItem {
@@ -105,12 +81,141 @@
     display: none;
 }
 
+#dashboard {
+    display: flex;
+}
+
+#dashboard * {
+    animation-name: fadeIn;
+    animation-duration: 0.65s;
+}
+
+#controlPanel {
+    width: 85%;
+    text-align: left;
+    min-height: 100%;
+}
+
+#addNewProduct {
+    min-height: 100%;
+    width: 100%;
+    display: flex;
+    position: relative;
+}
+
+#compulsoryInfo {
+    width: 50%;
+    padding: 1em;
+}
+
+.inputProductInfo {
+    height: 10vh;
+    margin: 1em 0;
+}
+
+.inputProductInfo input:not([type=file]), select {
+    width: 100%;
+    height: 60%;
+    border-radius: 0.8em;
+    outline: none;
+    background-color: #F6F4EB;
+    border: 1px solid #D8D9DA;
+    font-size: large;
+    padding: 1em;
+}
+
+select {
+    width: 50%;
+}
+
+.inputProductInfo input[type=number] {
+       font-style: italic;
+}
+
+.inputProductInfo input[type=file] {
+    font-style: italic;
+    height: 60%;
+    border-radius: 0.8em;
+    outline: none;
+    font-size: large;
+    padding: 1em;
+}
+
+.inputProductInfo input:focus, select:focus {
+    outline: 2px solid #0071e3;
+}
+
+#optionalInfo {
+    width: 50%;
+    padding: 1em;
+}
+
+#additionalInfoInput {
+    min-height: 40%;
+    width: 100%;
+    resize: vertical;
+    border-radius: 0.8em;
+    outline: none;
+}
+
+#additionalInfoInput:focus {
+    outline: 2px solid #0071e3;
+    border: none;
+    font-size: larger;
+    padding: 1em;
+}
+
+#additionalInfoInput:placeholder-shown {
+    font-size: large;
+    padding: 1em;
+}
+
+#previewThumnail {
+    height: 60%;
+    width: 100%;
+}
+
+#previewThumnail img {
+    display: flex;
+    margin: auto;
+    max-width: 70%;
+    max-height: 70%;
+    object-fit: contain;
+}
+
+#submitAddProduct {
+    font-size: medium;
+    position: absolute;
+    bottom: 1em;
+    right: 50%;
+    color: #ffffff;
+    background-color: #48b42c;
+    font-weight: bold;
+    padding: 1rem 3rem;
+    height: 3rem;
+    width: fit-content;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#submitAddProduct:hover {
+    cursor: pointer;
+    border-radius: 1em;
+}
+
 @media screen and (max-width: 1280px) {
-    .sideMenu {
-        transform: translateX(-50vh);
+    #controlPanel {
+        width: 100%;
+    }
+    #sideMenu {
+        background-color: #EEEEEE;
+        transform: translateX(-100vw);
         position: absolute;
-        z-index: 2;
-        width: 30%;
+        width: 35vw;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
 
@@ -127,38 +232,29 @@
     #content {
         margin: 0;
     }
+    #sideMenu {
+        width: 55vw;   
+    }
+}
+
+@media screen and (max-width: 760px) {
+    #addNewProduct {
+        flex-direction: column;
+    }
+    #compulsoryInfo, #optionalInfo {
+        width: 100%;
+    }
+    #additionalInfoInput {
+        min-height: 40vh;
+    }
 }
   
 @media screen and (max-width: 640px) {
-    .sideMenu {
-        transform: translateX(-50vh);
-        width: 40%;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    }
-
-    #sideMenuSwitch {
-        display: block;
-    }
-
     #content {
         width: 100%;
         margin: 0 1em;
     }
-}
-
-@media screen and (max-width: 320px) {
-    .sideMenu {
-        transform: translateX(-50vh);
-        width: 60%;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    }
-
-    #sideMenuSwitch {
-        display: block;
-    }
-
-    #content {
-        width: 100%;
-        margin: 0 1em;
+    #sideMenu {
+        width: 100vw;   
     }
 }

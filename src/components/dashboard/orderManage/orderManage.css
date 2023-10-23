@@ -4,7 +4,7 @@
 
 #orderContainer {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 2rem;
     row-gap: 2rem;
 }
@@ -65,4 +65,13 @@
 .orderQuickAction button:hover{
     cursor: pointer;
     background-color: #00C851;
+}
+
+@media screen and (max-width: 1080px) {
+    #orderContainer {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 2rem;
+        row-gap: 2rem;
+    }
 }

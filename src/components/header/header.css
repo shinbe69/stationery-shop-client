@@ -1,3 +1,25 @@
+#sideMenuSwitch {
+    display: flex;
+    visibility: hidden;
+    height: 100%;
+    margin-left: 1em;
+    width: 1.5em;
+    padding: 0;
+    border-radius: 10px;
+    z-index: 5;
+}
+
+#sideMenuSwitch:hover {
+    cursor: pointer;
+}
+
+#sideMenuSwitch img{
+    width: 100%;
+    height: fit-content;
+    margin: auto;
+    object-fit: contain;
+}
+
 #logo {
     width: fit-content;
 }
@@ -10,7 +32,7 @@
 }
 
 #search {
-    width: 70%;
+    width: calc(75% - 1.5em);
     display: flex;
     height: 100%;
     position: relative;
@@ -147,12 +169,19 @@ input:placeholder-shown {
     cursor: pointer;
 }
 
+
+@media screen and (max-width: 1280px) {
+    #sideMenuSwitch {
+        visibility: visible;
+    }
+}
+
 @media screen and (max-width: 860px) {
     #search {
         width: 60%;
     }
     #userInfo {
-        width: 30%;
+        width: calc(30% - 1.5em);
     }
 }
 

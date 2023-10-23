@@ -64,11 +64,18 @@ const router = createBrowserRouter([
                             }
                         },
                         {
-                            //Checkout
-                            path: '/checkout',
+                            path: '/order-manage',
                             element: <OnlyForwarded>
-                                        <CheckoutPage />
-                                    </OnlyForwarded>
+                                    <OrderManage />
+                                </OnlyForwarded>
+                        },
+                        {
+                            path: '/add-new-product',
+                            element: <Protected><AddNewProduct /></Protected>
+                        },
+                        {
+                            path: '/add-new-category',
+                            element: <Protected><AddNewCategory /></Protected>
                         }
                     ]
                 },
@@ -86,26 +93,6 @@ const router = createBrowserRouter([
                             //SignupForm
                             path: '/signup',
                             element: <SignupForm />
-                        }
-                    ]
-                },
-                {
-                    path: '/',
-                    element: <Protected>
-                                <Dashboard />
-                            </Protected>,
-                    children: [
-                        {
-                            path: '/order-manage',
-                            element: <OrderManage />
-                        },
-                        {
-                            path: '/add-new-product',
-                            element: <AddNewProduct />
-                        },
-                        {
-                            path: '/add-new-category',
-                            element: <AddNewCategory />
                         }
                     ]
                 },

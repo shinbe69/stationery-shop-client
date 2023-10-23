@@ -169,10 +169,20 @@ export default function Header() {
         }
     }
 
+    function handleSideMenuSwitch() {
+        if (document.getElementById('sideMenu').style.transform === 'translateX(-100vw)' || document.getElementById('sideMenu').style.transform === '')
+            document.getElementById('sideMenu').style.transform = 'translateX(0vw)'
+        else
+            document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
+    }
+
     return (
         <div id="header">
             <div id='logo'>
                 <a href='/'><img src='logo.jpg' alt='logo' /></a>
+            </div>
+            <div id='sideMenuSwitch' >
+                <img src='dropMenu.png' alt='side menu switch' onClick={ handleSideMenuSwitch }/>
             </div>
             <div id='search'>
                 <input type="text" onChange={ handleSearch } onClick={ handleSearch } onKeyDown={ handleKeyDown } placeholder="Nhập từ khóa để tìm sản phẩm">

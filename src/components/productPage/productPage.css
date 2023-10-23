@@ -44,7 +44,7 @@
 #addToCartSection {
     display: flex;
     height: 10%;
-    width: 80%;
+    width: 100%;
     margin-bottom: 2em;
 }
 
@@ -54,7 +54,7 @@
 
 #selectQuantity {
     display: flex;
-    border-radius: 30px;
+    border-radius: 25px;
     width: 10em;
     height: 3em;
     overflow: hidden;

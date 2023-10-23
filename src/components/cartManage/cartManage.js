@@ -13,6 +13,7 @@ export default function CartManage () {
     const navigate = useNavigate()
     const products = useLocation().state
     const [address, setAddress] = useState('')
+    const [phone, setPhone] = useState('')
     const [buttonContent, setButtonContent] = useState('Đặt hàng')
     const intervalID = useRef()
     const timer = useRef(5)
@@ -31,7 +32,10 @@ export default function CartManage () {
             },
             body: JSON.stringify({ username: cookie.user })
         }).then(result => result.json())
-        .then(user => setAddress(user.address))
+        .then(user => {
+            setAddress(user.address)
+            setPhone(user.phoneNumber)
+        })
         .catch(error => console.log(error))
     }, [])
 
@@ -71,7 +75,9 @@ export default function CartManage () {
                         setMessage('Đơn hàng được tạo thành công, vui lòng chờ xác nhận từ nhân viên')
                         showPopup()
                         setTimeout(() => {
-                            navigate('/')
+                            navigate('/order-manage', {
+                                state: true
+                            })
                         }, 700)
                     })
                     .catch(error => console.log(error))
@@ -105,7 +111,9 @@ export default function CartManage () {
     }
 
     function handleShowOrders() {
-        navigate('/')
+        navigate('/order-manage', {
+            state: true
+        })
     }
     
     return (
@@ -132,8 +140,12 @@ export default function CartManage () {
                     <div id='addressConfirm'>
                         <h3 style={{ textDecoration: 'underline' }}>Địa chỉ giao hàng:</h3>
                         <p>{ !address ? 'Bạn chưa có thông tin địa chỉ' : address}</p>
+                        { !phone ? <></> : <p>Số điện thoại: { phone }</p> }
                         <p id='changeAddress' onClick={ () => navigate('/update-user-info', {
-                            state: cookie.user
+                            state: {
+                                username: cookie.user,
+                                onlyUpdateAddress: !address ? false : true
+                            }
                         })}>{!address ? 'Bổ sung' : 'Thay đổi địa chỉ'}</p>
                     </div>
                     <div id='paymentMethod'>

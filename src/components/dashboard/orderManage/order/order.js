@@ -1,6 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
+import { useCookies } from "react-cookie"
+import { showPopup, selectTypeOfPopup } from "../../../popup/popup"
+import { MessageContext } from "../../../../AppContainer"
 
 export default function Order({ order }) {
+    const [cookie] = useCookies()
+    const [message, setMessage] = useContext(MessageContext)
     const [status, setStatus] = useState('')
     const [orderColor, setOrderColor] = useState('')
     useEffect(() => {
@@ -28,7 +33,26 @@ export default function Order({ order }) {
     }, [])
 
     function handleConfirmOrder() {
-        
+        fetch('/api/orders/confirmOrder', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ orderID: order._id })
+        }).then(res => {
+            if (res.ok) {
+                selectTypeOfPopup('SUCCESS')
+                setMessage('Xác nhận đơn hàng thành công')
+                showPopup()
+                order.status = 'confirmed'
+            }
+            else {
+                selectTypeOfPopup('WARNING')
+                setMessage('Có lỗi xảy ra, vui lòng thử lại')
+                showPopup()
+            }
+        })
     }
 
     return (
@@ -59,7 +83,7 @@ export default function Order({ order }) {
                     </div>
                     <div className="orderQuickAction">
                         <div style={{ width: 'fit-content', margin: 'auto' }}>
-                            <button onClick={ handleConfirmOrder }>Xác nhận</button>
+                            { cookie.isAdmin ? order.status === 'unconfirmed' ? <button onClick={ handleConfirmOrder }>Xác nhận</button> : <></> : <></> }
                             <button >Chi tiết</button>
                         </div>
                     </div>

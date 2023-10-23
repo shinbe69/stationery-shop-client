@@ -37,6 +37,9 @@ export default function App() {
       .then(products => setProducts(products))
       .catch((error) => console.log(error))
       // Show clear category button
+      if (document.getElementById('sideMenu').style.transform !== '')
+        document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
+
       document.getElementById('clearCategoryFilter').style.display = 'block'
       navigate('/product-filter')
     }
@@ -50,21 +53,21 @@ export default function App() {
     }
   }, [selection])
 
-  function handleSideMenuSwitch() {
-    document.getElementById('sideMenuSwitch').style.display = 'none'
-    document.getElementById('sideMenu').style.transform = 'translateX(0vw)'
-  }
-
   function handleShowDashboard() {
     navigate('/order-manage', {
       state: cookie.isAdmin
     })
   }
 
+  function handleHideSideMenu() {
+    if (document.getElementById('sideMenu').style.transform !== '')
+        document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
+  }
+
   return (
     <div id='app'>
-      <div className="sideMenu">
-        <div id='categoryContainer'>
+      <div id="sideMenu" >
+        <div className='categoryContainer'>
           <h4 style={{ textDecoration: 'underline' }}>Danh mục sản phẩm</h4>
           {categories.map(category => (
             <div className="categoryItem" key={ category._id } onClick={ () => setSelection(category._id) } style={ category._id === selection ? { backgroundColor: '#dedcdc' } : {}} >
@@ -86,19 +89,48 @@ export default function App() {
           ))}
         </div> */}
         { typeof cookie.user !== 'undefined' && cookie.isAdmin ? 
-          <div id='showDashboard'>
-            <div className='categoryItem' onClick={ handleShowDashboard }>
-              <img src='./settings.png' alt="category item" />
-              <hr style={{ margin: '0 1rem' }} />
-              <p>Trang quản lý</p>
+          // <div id='showDashboard'>
+          //   <div className='categoryItem' onClick={ handleShowDashboard }>
+          //     <img src='./settings.png' alt="category item" />
+          //     <hr style={{ margin: '0 1rem' }} />
+          //     <p>Trang quản lý</p>
+          //   </div>
+          // </div>
+          <div className='categoryContainer' style={{ marginTop: '2em' }}>
+                <h4 style={{ textDecoration: 'underline' }}>Thao tác quản lý</h4>
+                <div className='categoryItem' onClick={() => {
+                  handleHideSideMenu()
+                  navigate('/add-new-product', {
+                    state: cookie.isAdmin
+                  })
+                }}>
+                    <img src='./add-product.png' alt="category item" />
+                    <hr style={{ margin: '0 1rem' }} />
+                    <p>Thêm sản phẩm mới</p>
+                </div>
+                <div className='categoryItem' onClick={() => {
+                  handleHideSideMenu()
+                  navigate('/add-new-category', {
+                    state: cookie.isAdmin
+                })
+                }} >
+                    <img src='./new-category.png' alt="category item" />
+                    <hr style={{ margin: '0 1rem' }} />
+                    <p>Tạo danh mục mới</p>
+                </div>
+                <div className='categoryItem' onClick={() => {
+                  handleHideSideMenu()
+                  navigate('/order-manage', {
+                    state: cookie.isAdmin
+                })
+                }}>
+                    <img src='./pending-order.png' alt="category item" />
+                    <hr style={{ margin: '0 1rem' }} />
+                    <p>Quản lý đơn hàng</p>
+                </div>
             </div>
-          </div>
           : <></>
         }
-      </div>
-
-      <div id='sideMenuSwitch' onClick={ handleSideMenuSwitch }>
-        <img src='dropMenu.png' alt='side menu switch'/>
       </div>
       <div id='content' >
         <ProductSectionContext.Provider value={products} >

@@ -90,7 +90,7 @@ export default function AddNewProduct() {
     }
 
     return (
-        <div id="addNewProduct">
+        <div id="addNewProduct" style={{ textAlign: 'left' }}>
             <div id='compulsoryInfo'>
                 <div className='inputProductInfo' style={{ marginTop: '0'}}>
                     <label >Tên sản phẩm:</label>

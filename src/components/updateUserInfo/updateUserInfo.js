@@ -6,7 +6,8 @@ import { MessageContext } from "../../AppContainer"
 import './updateUserInfo.css'
 
 export default function UpdateUserInfo() {
-    const username = useLocation().state
+    const username = useLocation().state.username
+    const onlyUpdateAddress = useLocation().state.onlyUpdateAddress
     const [cookie, setCookie, removeCookie] = useCookies()
     const navigate = useNavigate()
     const [message, setMessage] = useContext(MessageContext)
@@ -24,6 +25,11 @@ export default function UpdateUserInfo() {
     useEffect(() => {
         let buttonContainerWidth = document.getElementById('buttonContainer').offsetWidth
         document.getElementById('buttonContainer').style.right =  (100 - ((buttonContainerWidth / document.body.offsetWidth) * 100)) / 2 + '%'
+
+        // if (onlyUpdateAddress) {
+        //     document.getElementById('bio').style.opacity = '0.5'
+        //     document.getElementById('bio').style.pointerEvents = 'none'
+        // }
     }, [])
 
     function handleChange(event) {
@@ -77,7 +83,7 @@ export default function UpdateUserInfo() {
     }, [district])
 
     function saveInfo() {
-        if (province !== '' && district !== '' && ward !== '' && street !== '' && gender !== '' && dob !== '' && phoneNumber !== '') {
+        if (province !== '' && district !== '' && ward !== '' && street !== '' && phoneNumber !== '' && (onlyUpdateAddress ? true :  gender !== '' && dob !== '')) {
             if (phoneNumber.length === 10) {
                 let prepareAddress = street + ', ' + ward + ', ' + district.split(',')[1] + ', ' + province.split(',')[1]
                 fetch('/api/users/updateUser', {
@@ -86,7 +92,7 @@ export default function UpdateUserInfo() {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ username, address: prepareAddress, gender, dob, phoneNumber })
+                    body: JSON.stringify(onlyUpdateAddress ? { username, address: prepareAddress, phoneNumber } : { username, address: prepareAddress, gender, dob, phoneNumber })
                 })
                 .then(res => {
                     if (res.status === 200) {
@@ -158,34 +164,34 @@ export default function UpdateUserInfo() {
                     <br />
                     <input type="text" name="street" value={ street } onChange={ handleChange } placeholder="Nhập địa chỉ nhà"/>
                 </div>
-            </div>
-            <hr style={{ margin: 'auto 1em', height: '75%' }} />
-            <div id='bio'>
-                <h3 style={{ textDecoration: 'underline' }}>Thông tin cá nhân</h3>
-                <div className='inputProductInfo'>
-                    <label >Ngày sinh (theo định dạng 'tháng/ngày/năm'):</label>
-                    <br />
-                    <input type="date" name="dob" onChange={ handleChange }/>
-                </div>
-                <div className='inputProductInfo'>
-                    <label >Giới tính:</label>
-                    <br />
-                    <select name="gender" required style={{ padding: '0 0.5em' }} onChange={ handleChange }>
-                        <option style={{ fontStyle: 'italic' }} value={ '' } >--Chọn giới tính--</option>
-                        <option value={'male'}>Nam</option>
-                        <option value={'female'}>Nữ</option>
-                        <option value={'other'}>Khác</option>
-                    </select>
-                </div>
                 <div className='inputProductInfo'>
                     <label >Số điện thoại giao hàng:</label>
                     <br />
                     <input style={{ width: '80%' }} type="phone" name="phone" value={ phoneNumber } onChange={ handleChange } placeholder="Nhập số điện thoại (10 chữ số)"/>
                 </div>
             </div>
+            <hr style={{ margin: 'auto 1em', height: '75%' }} />
+            <div id='bio' style={{ opacity: onlyUpdateAddress ? '0.5' : '1'}}>
+                <h3 style={{ textDecoration: 'underline' }}>Thông tin cá nhân</h3>
+                <div className='inputProductInfo'>
+                    <label >Ngày sinh (theo định dạng 'tháng/ngày/năm'):</label>
+                    <br />
+                    <input disabled={onlyUpdateAddress} type="date" name="dob" onChange={ handleChange }/>
+                </div>
+                <div className='inputProductInfo'>
+                    <label >Giới tính:</label>
+                    <br />
+                    <select disabled={onlyUpdateAddress} name="gender" required style={{ padding: '0 0.5em' }} onChange={ handleChange }>
+                        <option style={{ fontStyle: 'italic' }} value={ '' } >--Chọn giới tính--</option>
+                        <option value={'male'}>Nam</option>
+                        <option value={'female'}>Nữ</option>
+                        <option value={'other'}>Khác</option>
+                    </select>
+                </div>
+            </div>
             <div id="buttonContainer">
                 <h3 id='submitSaveInfo' onClick={ saveInfo }>Lưu thông tin</h3>
-                <h3 id='skip' onClick={ () => navigate('/') }>Bổ sung sau</h3>
+                { onlyUpdateAddress ? <></> : <h3 id='skip' onClick={ () => navigate('/') }>Bổ sung sau</h3>}
             </div>
         </div>
     )
