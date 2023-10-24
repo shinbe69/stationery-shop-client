@@ -39,7 +39,7 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://shopdieuthien.onrender.com",
+  "proxy": "https://shopdieuthien.onrender.com/",
   "devDependencies": {
     "webpack-cli": "^5.1.4"
   }

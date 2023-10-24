@@ -1,4 +1,8 @@
 #productSection {
+
+}
+
+#productContainer {
     margin: 0;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -7,10 +11,37 @@
     transition: all 0.55s;
 }
 
+#productNavigator {
+    width: 100%;
+    height: 5vh;
+    text-align: left;
+    display: flex;
+    margin-bottom: 1em;
+}
+
+#productNavigator *{
+    margin: auto 0;
+}
+
+.naviOption {
+    margin: 0 3em;
+    width: 30%;
+}
+
+#productNavigator select {
+    outline: none;
+    width: 50%;
+    height: fit-content;
+    padding: 0.5em;
+    font-size: medium;
+    border-radius: 0.3em;
+    margin-left: 1em;
+}
+
 .product {
     position: relative;
     overflow: hidden;
-    height: 30vh;
+    height: 25vh;
     background-color: #F4EEEE;
     padding: 0.5em;
     border-radius: 10px;

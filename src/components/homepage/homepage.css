@@ -57,6 +57,15 @@
     margin: auto;
 }
 
+#recentProducts {
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 2rem;
+    row-gap: 2rem;
+    transition: all 0.55s;
+}
+
 @media screen and (max-width: 860px) {
     #slideShow {
         height: 25vh;

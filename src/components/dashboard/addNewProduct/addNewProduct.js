@@ -56,7 +56,7 @@ export default function AddNewProduct() {
     }
 
     function handleAddNewProduct() {
-        if (name === '' || category === '' || description === '' || unitPrice === '' || quantity === '' || thumnail === '') {
+        if (name === '' || category === '' || description === '' || quantity === '' || thumnail === '') {
             setMessage('Bạn vui lòng điền đầy đủ thông tin bắt buộc')
             showPopup()
         }

@@ -63,10 +63,6 @@
     width: 80%;
 }
 
-#clearCategoryFilter img{
-    margin: auto;
-}
-
 #content {
     width: 80%;
     margin: 0 2rem;
@@ -75,10 +71,6 @@
 #content * {
     animation-name: fadeIn;
     animation-duration: 0.65s;
-}
-
-#clearCategoryFilter {
-    display: none;
 }
 
 #dashboard {

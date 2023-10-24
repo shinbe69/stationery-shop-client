@@ -4,13 +4,13 @@ import { useCookies } from 'react-cookie';
 import { CartContext } from './AppContainer';
 import './App.css';
 
-export const ProductSectionContext = createContext()
+export const CategoryContext = createContext()
 
 export default function App() {
   const [cart ,serCart] = useContext(CartContext)
   const [cookie, setCookie, removeCookie] = useCookies()
   const [categories, setCategories] = useState([])
-  const [selection, setSelection] = useState('')
+  const [category, setCategory] = useState('')
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
   const second = useRef(0)
@@ -27,40 +27,16 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    if (selection !== '') {
-      fetch('/api/products/getProductsByCategory', {
-          method: 'POST',
-          headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ categoryId: selection })
-      })
-      .then(res => res.json())
-      .then(products => setProducts(products))
-      .catch((error) => console.log(error))
+    if (category !== '') {
       // Show clear category button
       if (document.getElementById('sideMenu').style.transform !== '')
         document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
-
-      document.getElementById('clearCategoryFilter').style.display = 'block'
-      navigate('/product-filter')
+      navigate('/product-filter', {
+        state: category
+      })
+      setCategory('')
     }
-    else {
-      fetch('/api/products/getProducts')
-      .then(res => res.json())
-      .then(products => setProducts(products))
-      .catch((error) => console.log(error))
-      // Hide the clear category button
-      document.getElementById('clearCategoryFilter').style.display = 'none'
-    }
-  }, [selection])
-
-  function handleShowDashboard() {
-    navigate('/order-manage', {
-      state: cookie.isAdmin
-    })
-  }
+  }, [category])
 
   function handleHideSideMenu() {
     if (document.getElementById('sideMenu').style.transform !== '')
@@ -73,32 +49,27 @@ export default function App() {
         <div className='categoryContainer'>
           <h4 style={{ textDecoration: 'underline' }}>Danh mục sản phẩm</h4>
           {categories.map(category => (
-            <div className="categoryItem" key={ category._id } onClick={ () => setSelection(category._id) } style={ category._id === selection ? { backgroundColor: '#dedcdc' } : {}} >
+            <div className="categoryItem" key={ category._id } onClick={ () => setCategory(category._id) } style={ category._id === category ? { backgroundColor: '#dedcdc' } : {}} >
               <img src={ category.thumnail } alt="category item" />
               <hr style={{ margin: '0 1rem' }} />
               <p>{ category.name }</p>
             </div>
           ))}
-          <div className='categoryItem' id='clearCategoryFilter' onClick={() => setSelection('') }>
-            <img src='./close.png' alt='clear selection'/>
+          <div className='categoryItem' id='allCategory' onClick={() => {
+            setCategory('all')
+          }}>
+            <p style={{ textDecoration: 'underline' }}>Tất cả sản phẩm</p>
           </div>
         </div>
         {/* <div id='recentBlogs'>
           <h4 style={{ textDecoration: 'underline' }}>Bài viết gần đây</h4>
           {categories.map(category => (
-            <div className="categoryItem" key={ category._id } onClick={ () => setSelection(category._id) } style={ category._id === selection ? { backgroundColor: '#dedcdc' } : {}} >
+            <div className="categoryItem" key={ category._id } onClick={ () => setCategory(category._id) } style={ category._id === category ? { backgroundColor: '#dedcdc' } : {}} >
               <p>{ category.name }</p>
             </div>
           ))}
         </div> */}
         { typeof cookie.user !== 'undefined' && cookie.isAdmin ? 
-          // <div id='showDashboard'>
-          //   <div className='categoryItem' onClick={ handleShowDashboard }>
-          //     <img src='./settings.png' alt="category item" />
-          //     <hr style={{ margin: '0 1rem' }} />
-          //     <p>Trang quản lý</p>
-          //   </div>
-          // </div>
           <div className='categoryContainer' style={{ marginTop: '2em' }}>
                 <h4 style={{ textDecoration: 'underline' }}>Thao tác quản lý</h4>
                 <div className='categoryItem' onClick={() => {
@@ -136,9 +107,9 @@ export default function App() {
         }
       </div>
       <div id='content' >
-        <ProductSectionContext.Provider value={products} >
+        <CategoryContext.Provider value={category} >
           <Outlet />
-        </ProductSectionContext.Provider>
+        </CategoryContext.Provider>
       </div>
     </div>
   );

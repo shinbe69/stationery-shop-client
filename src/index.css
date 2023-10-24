@@ -57,9 +57,11 @@ code {
 }
 
 #footer {
+  border-radius: 0.5em;
   background-color: #F6F4EB;
-  width: 100%;
-  min-height: 20%;
+  width: 70%;
+  margin: auto;
+  min-height: 15%;
 }
 
 a {
