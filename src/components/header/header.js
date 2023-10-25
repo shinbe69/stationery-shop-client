@@ -197,9 +197,9 @@ export default function Header() {
                 </div>
             </div>
             <div id='userInfo'>
-                <div id='cart' onClick={ handleCartClick }>
+                <div id='cart' >
                     <p id='productQuantityInCart'>{ cartQuantity }</p>
-                    <img src='cart.png' alt='cart' />
+                    <img src='cart.png' alt='cart' onClick={ handleCartClick }/>
                 </div>
                 <div id='user'>
                     <a href='/login' style={{textDecoration: 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden'}}>{ user }</a>

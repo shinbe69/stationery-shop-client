@@ -4,8 +4,6 @@ import { useCookies } from 'react-cookie';
 import { CartContext } from './AppContainer';
 import './App.css';
 
-export const CategoryContext = createContext()
-
 export default function App() {
   const [cart ,serCart] = useContext(CartContext)
   const [cookie, setCookie, removeCookie] = useCookies()
@@ -107,9 +105,7 @@ export default function App() {
         }
       </div>
       <div id='content' >
-        <CategoryContext.Provider value={category} >
           <Outlet />
-        </CategoryContext.Provider>
       </div>
     </div>
   );

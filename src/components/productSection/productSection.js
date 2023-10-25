@@ -6,21 +6,37 @@ import './productSection.css'
 
 export default function ProductSection() {
     const navigateState = useLocation().state
+    const [category, setCategory] = useState()
     const [products, setProducts] = useState([])
     const [filter, setFilter] = useState('default')
 
     useEffect(() => {
-        fetch('/api/products/getProducts', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(typeof navigateState === 'string' ? { filter, navigateState }: { filter })
-        }).then(res => res.json())
-        .then(products => setProducts(products))
-        .catch(err => console.log(err))
-    }, [filter, navigateState])
+        if (typeof navigateState === 'string') {
+            if (navigateState === 'all')
+                setCategory(false)
+            else {
+                setCategory(navigateState)
+            }
+        }
+        else {
+            setProducts(navigateState)
+        }
+    }, [navigateState])
+
+    useEffect(() => {
+        if (typeof category !== 'undefined') {
+            fetch('/api/products/getProducts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({ filter, category })
+            }).then(res => res.json())
+            .then(products => setProducts(products))
+            .catch(err => console.log(err))
+        }
+    }, [filter, category])
 
     function handleChangeFilter(event) {
         setFilter(event.target.value)

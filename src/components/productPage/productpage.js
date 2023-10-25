@@ -22,7 +22,7 @@ export default function ProductPage() {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username: cookie.user, cart: [{id: product.state.id, quantity}]})
+                body: JSON.stringify({ username: cookie.user, cart: [{id: product.state._id, quantity}]})
             }).then(result => result.json())
             .then(cart => {
                 setCartQuantity(cart.totalQuantity)

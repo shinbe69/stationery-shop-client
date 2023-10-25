@@ -12,6 +12,7 @@ export default function Homepage() {
     const index = useRef(0)
 
     useEffect(() => {
+        console.log('render')
         fetch('/api/products/getProducts', {
             method: 'POST',
             headers: {
@@ -29,7 +30,7 @@ export default function Homepage() {
                     index.current === size -1 ? index.current = 0 : index.current++
                     setBestSelling(products[index.current])
                     
-                }, 8000)
+                }, 5000)
             }
         })
         .catch(error => console.log(error))
@@ -57,14 +58,15 @@ export default function Homepage() {
                 <div id='item' onClick={() => navigate('/product', {
                     state: bestSelling
                 })}>
-                    <img src={bestSelling.thumnail} alt='popular item' />
+                    <img src={bestSelling.thumnail} alt='popular item'  />
                 </div>
                 <div id='itemInfo'>
-                    <p>{ bestSelling.name }</p>
+                    <p style={{ fontWeight: 'bold' }}>{ bestSelling.name }</p>
+                    <hr style={{ width: '60%', margin: 'auto' }} />
                     <p>{ bestSelling.description }</p>
                 </div>
             </div> : <></> }
-            <h3 style={{ textAlign: 'left', marginBottom: '1em', textDecoration: 'underline' }} >Sản phẩm mới thêm gần đây</h3>
+            <h3 style={{ textAlign: 'left', margin: '1em 0', textDecoration: 'underline' }} >Sản phẩm mới thêm gần đây</h3>
             <div id='recentProducts'>
                 { recentProducts.map(product => (
                     <Product key={product._id} product={product} />
