@@ -83,7 +83,7 @@ export default function Item({ product }) {
             <p style={{ width: '35%'}}>{ product.name }</p>
             <h4 id="unitPrice" >{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price) }</h4>
             <div id="itemQuantity" style={{ height: '100%', display: 'flex'}}>
-                <div id='selectQuantity' style={{ width: '40%', height: '40%', margin: 'auto' }}>
+                <div id='selectQuantity' >
                     <div className='subtract' style={{ fontWeight: 'bold', width: '25%', display: 'flex' }} onClick={(event) => {
                         if (quantity > 1) selectQuantity(quantity - 1)
                         handleChangeItemQuantity(event)

@@ -26,7 +26,6 @@
 
 @media screen and (max-width: 1280px) {
     #warningPopup {
-        padding: 0;
         width: calc(15vw*2);
         left: calc((100vw - (15vw*2))/2);
     }

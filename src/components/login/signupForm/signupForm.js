@@ -65,7 +65,9 @@ export default function SignupForm() {
                                 .then((response) => {
                                     if (response.status === 200) {
                                         navigate('/update-user-info', {
-                                            state: username
+                                            state: {
+                                                username
+                                            }
                                         })
                                     }
                                 })

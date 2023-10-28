@@ -8,6 +8,7 @@ import './updateUserInfo.css'
 export default function UpdateUserInfo() {
     const username = useLocation().state.username
     const onlyUpdateAddress = useLocation().state.onlyUpdateAddress
+    const navigateBack = useLocation().state.navigateBack
     const [cookie, setCookie, removeCookie] = useCookies()
     const navigate = useNavigate()
     const [message, setMessage] = useContext(MessageContext)
@@ -25,11 +26,6 @@ export default function UpdateUserInfo() {
     useEffect(() => {
         let buttonContainerWidth = document.getElementById('buttonContainer').offsetWidth
         document.getElementById('buttonContainer').style.right =  (100 - ((buttonContainerWidth / document.body.offsetWidth) * 100)) / 2 + '%'
-
-        // if (onlyUpdateAddress) {
-        //     document.getElementById('bio').style.opacity = '0.5'
-        //     document.getElementById('bio').style.pointerEvents = 'none'
-        // }
     }, [])
 
     function handleChange(event) {
@@ -100,7 +96,7 @@ export default function UpdateUserInfo() {
                         setMessage('Cập nhật thành công')
                         showPopup()
                         setTimeout(() => {
-                            navigate('/')
+                            navigate(navigateBack ? -1 : '/')
                         }, 700)
                     }
                     else {

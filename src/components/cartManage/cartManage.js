@@ -132,7 +132,7 @@ export default function CartManage () {
                     <Item key={ product._id } product={ product } />
                 ))}
             </div>
-            <div style={{ position: 'sticky', bottom: '0px', zIndex: '3', WebkitBackdropFilter: 'blur(5px)', backdropFilter: 'blur(5px)', padding: '1em 0'}}>
+            <div id='purchaseInfoContainer'>
             { products.length === 0 ? <h3>Giỏ hàng của bạn đang trống</h3> : <>
             <div className='seperateLine'></div>
                 <div id='paymentInfo' >
@@ -144,7 +144,8 @@ export default function CartManage () {
                         <p id='changeAddress' onClick={ () => navigate('/update-user-info', {
                             state: {
                                 username: cookie.user,
-                                onlyUpdateAddress: !address ? false : true
+                                onlyUpdateAddress: !address ? false : true,
+                                navigateBack : true
                             }
                         })}>{!address ? 'Bổ sung' : 'Thay đổi địa chỉ'}</p>
                     </div>

@@ -12,7 +12,6 @@ export default function Homepage() {
     const index = useRef(0)
 
     useEffect(() => {
-        console.log('render')
         fetch('/api/products/getProducts', {
             method: 'POST',
             headers: {
@@ -30,7 +29,7 @@ export default function Homepage() {
                     index.current === size -1 ? index.current = 0 : index.current++
                     setBestSelling(products[index.current])
                     
-                }, 5000)
+                }, 7000)
             }
         })
         .catch(error => console.log(error))
@@ -54,7 +53,7 @@ export default function Homepage() {
         <div id="homepage">
             {bestSelling.length !== 0 ? 
             <div id='slideShow'>
-                <h3 style={{ position: 'absolute', top: '0.5em', left: '1em', color: '#FFFFFF', zIndex: '3' }} >Sản phẩm bán chạy</h3>
+                <h3 style={{ position: 'absolute', top: '0.5em', left: '1em', zIndex: '3', fontStyle: 'italic', textDecoration: 'underline' }} >Sản phẩm bán chạy</h3>
                 <div id='item' onClick={() => navigate('/product', {
                     state: bestSelling
                 })}>
@@ -63,7 +62,7 @@ export default function Homepage() {
                 <div id='itemInfo'>
                     <p style={{ fontWeight: 'bold' }}>{ bestSelling.name }</p>
                     <hr style={{ width: '60%', margin: 'auto' }} />
-                    <p>{ bestSelling.description }</p>
+                    <p id='itemDescription'>{ bestSelling.description }</p>
                 </div>
             </div> : <></> }
             <h3 style={{ textAlign: 'left', margin: '1em 0', textDecoration: 'underline' }} >Sản phẩm mới thêm gần đây</h3>

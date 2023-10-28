@@ -61,8 +61,7 @@ code {
   background-color: #F6F4EB;
   width: 70%;
   margin: auto;
-  min-height: 15%;
-  font-size: 1em;
+  min-height: 15vh;
 }
 
 a {

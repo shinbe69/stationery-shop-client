@@ -202,7 +202,7 @@ export default function Header() {
                     <img src='cart.png' alt='cart' onClick={ handleCartClick }/>
                 </div>
                 <div id='user'>
-                    <a href='/login' style={{textDecoration: 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden'}}>{ user }</a>
+                    <a href='/login' style={{textDecoration: 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', pointerEvents: cookie.user ? 'none' : 'auto'}} >{ user }</a>
                     <img id='logout' onClick={ handleLogout } src='logout.png' alt='logout' />
                 </div>
             </div>

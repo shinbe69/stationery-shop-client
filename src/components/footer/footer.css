@@ -1,13 +1,6 @@
 #footer {
     padding: 1em;
-}
-
-#addressInfo {
-    width: 50%;
-}
-
-#aboutUs {
-    width: 50%;
+    height: fit-content;
 }
 
 @media screen and (max-width: 1280px) {

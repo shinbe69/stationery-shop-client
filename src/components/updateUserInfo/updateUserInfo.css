@@ -69,3 +69,24 @@
     cursor: pointer;
     border-radius: 1em;
 }
+
+@media screen and (max-width: 860px) {
+    #updateUserInfo {
+        display: block;
+    }
+
+    #updateUserInfo hr {
+        display: none;
+    }
+
+    #addressInfo, #bio {
+        width: 100%;
+        padding: 0 1em;
+    }
+
+    #buttonContainer {
+        position: static;
+        width: fit-content;
+        margin: auto;
+    }
+}

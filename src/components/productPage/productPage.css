@@ -45,7 +45,7 @@
     display: flex;
     height: 10%;
     width: 100%;
-    margin-bottom: 2em;
+    margin: 2em 0;
 }
 
 #specificInfo {
@@ -54,12 +54,12 @@
 
 #selectQuantity {
     display: flex;
-    border-radius: 25px;
+    border-radius: 1em;
     width: 10em;
     height: 3em;
     overflow: hidden;
     border: 1px solid #48b42c;
-    margin: 0 2em;
+    margin: auto 2em;
 }
 
 #selectQuantity p {
@@ -73,6 +73,7 @@
 
 #addToCartButton {
     display: flex;
+    margin: auto 0;
     width: fit-content;
     padding: 0.5em;
     border: 1px solid #48b42c;
@@ -114,14 +115,15 @@
     #addToCartSection {
         right: 0;
         width: 100%;
+
     }
 
     #addToCartButton {
-        margin: 0 1em;
+        margin: auto 1em;
     }
 
     #selectQuantity {
-        margin: 0 1em;
+        margin: auto 1em;
     }
 }
 

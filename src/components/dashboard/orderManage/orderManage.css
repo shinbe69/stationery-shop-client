@@ -75,3 +75,12 @@
         row-gap: 2rem;
     }
 }
+
+@media screen and (max-width: 760px) {
+    #orderContainer {
+        display: grid;
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+        column-gap: 1rem;
+        row-gap: 1rem;
+    }
+}
