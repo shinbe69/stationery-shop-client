@@ -62,7 +62,7 @@ export default function ProductPage() {
                     </div>
                     <div id='addToCartButton' onClick={ handleAddToCart }>
                         <img src="add-to-cart.png" alt="add-to-cart" style={{ margin: 'auto' }} />
-                        <p style={{ whiteSpace: 'nowrap', margin: 'auto' }} ><b>Thêm vào giỏ hàng</b></p>
+                        <p style={{ whiteSpace: 'nowrap', margin: 'auto', color: '#FFF' }} ><b>Thêm vào giỏ hàng</b></p>
                     </div>
                 </div>
                 <div id='specificInfo'>

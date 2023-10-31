@@ -103,6 +103,10 @@ export default function App() {
             </div>
           : <></>
         }
+        <div id='zaloLink' onClick={() => window.open("https://zalo.me/0964209830", "_blank")}>
+          <img src='/zalo.webp' alt='zalo' />
+          <h5 >Chat với shop</h5>
+        </div>
       </div>
       <div id='content' >
           <Outlet />

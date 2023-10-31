@@ -9,7 +9,7 @@
     border-radius: 0.5em;
     z-index: 4;
     width: 20%;
-    height: 95%;
+    height: 80vh;
     transition-property: all;
     transition-duration: 0.4s;
 }
@@ -68,6 +68,7 @@
 #content {
     width: 80%;
     margin: 0 2rem;
+    position: relative;
 }
 
 #content * {
@@ -199,6 +200,42 @@ select {
 #submitAddProduct:hover {
     cursor: pointer;
     border-radius: 1em;
+}
+
+#zaloLink {
+    z-index: 2;
+    position: absolute;
+    bottom: 1em;
+    left: 30%;
+    margin: 2em auto;
+    background-color: #fff;
+    padding: 0.3em 0.3em;
+    display: flex;
+    border: 1px solid #0071e3;
+    border-radius: 1em;
+    height: fit-content;
+    width: fit-content;
+    
+}
+
+#zaloLink:hover {
+    cursor: pointer;
+    background-color: #0071e3;
+    > h5 {
+        color: #ffffff;
+    }
+}
+
+#zaloLink img {
+    height: 2em;
+    width: 2em;
+    object-fit: contain;
+}
+
+#zaloLink h5 {
+    margin: auto 0.5em;
+    color: #0071e3;
+    white-space: nowrap;
 }
 
 @media screen and (max-width: 1280px) {

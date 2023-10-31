@@ -108,12 +108,17 @@
 @media screen and (max-width: 500px) {
     #slideShow {
         height: 25vh;
-        margin: 0 1rem;
+        margin: 0;
+        border-radius: 20px;
     }
     #itemInfo {
         font-size: 0.8em;
         padding: 0.5em;
         top: 50%;
+    }
+
+    #item img {
+        border-radius: 20px;
     }
 
     #itemInfo hr {
@@ -127,9 +132,15 @@
 
 @media screen and (max-width: 320px) {
     #recentProducts {
-        margin: 1rem 1rem;
+        margin: 1rem;
         grid-template-columns: repeat(1, minmax(0, 1fr));
         column-gap: 1rem;
         row-gap: 1rem;
+    }
+    #slideShow {
+        border-radius: 15px;
+    }
+    #item img {
+        border-radius: 15px;
     }
 }

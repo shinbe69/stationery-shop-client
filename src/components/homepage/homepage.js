@@ -52,8 +52,10 @@ export default function Homepage() {
     return (
         <div id="homepage">
             {bestSelling.length !== 0 ? 
+            <>
+            <h3 style={{ textDecoration: 'underline', textAlign: 'left', margin: '1em 0' }} >Sản phẩm bán chạy</h3>
             <div id='slideShow'>
-                <h3 style={{ position: 'absolute', top: '0.5em', left: '1em', zIndex: '3', fontStyle: 'italic', textDecoration: 'underline' }} >Sản phẩm bán chạy</h3>
+                
                 <div id='item' onClick={() => navigate('/product', {
                     state: bestSelling
                 })}>
@@ -64,7 +66,7 @@ export default function Homepage() {
                     <hr style={{ width: '60%', margin: 'auto' }} />
                     <p id='itemDescription'>{ bestSelling.description }</p>
                 </div>
-            </div> : <></> }
+            </div></> : <></> }
             <h3 style={{ textAlign: 'left', margin: '1em 0', textDecoration: 'underline' }} >Sản phẩm mới thêm gần đây</h3>
             <div id='recentProducts'>
                 { recentProducts.map(product => (

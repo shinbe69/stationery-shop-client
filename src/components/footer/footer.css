@@ -3,9 +3,29 @@
     height: fit-content;
 }
 
+#footerChild {
+    font-size: large;
+    display: flex;
+    padding: 0.2em 0;
+    text-align: left;
+}
+
+#footerChild div {
+    width: 50%;
+}
+
 @media screen and (max-width: 1280px) {
     #footer {
         width: 100%;
         font-size: 0.9em;
+    }
+    #footerChild {
+        display: block;
+        text-align: center;
+    }
+
+    #footerChild div {
+        width: 100%;
+        margin: 1em 0;
     }
 }

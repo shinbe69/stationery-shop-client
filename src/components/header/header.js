@@ -32,7 +32,7 @@ export default function Header() {
                 setCart(cart)
             })
             .catch(error => console.log(error))
-            setUser((cookie.user).substring(0, 7) + '...')
+            setUser('Chào '.concat(cookie.user))
             document.getElementById('logout').style.display = 'block'
         }
         else {
@@ -202,7 +202,7 @@ export default function Header() {
                     <img src='cart.png' alt='cart' onClick={ handleCartClick }/>
                 </div>
                 <div id='user'>
-                    <a href='/login' style={{textDecoration: 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', pointerEvents: cookie.user ? 'none' : 'auto'}} >{ user }</a>
+                    <a href='/login' style={{textDecoration: cookie.user ? 'none' : 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', pointerEvents: cookie.user ? 'none' : 'auto'}} >{ user }</a>
                     <img id='logout' onClick={ handleLogout } src='logout.png' alt='logout' />
                 </div>
             </div>

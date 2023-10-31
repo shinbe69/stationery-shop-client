@@ -35,25 +35,27 @@ code {
 }
 
 #header {
+  position: -webkit-sticky;
   position: sticky;
-  top: 0px;
+  align-self: flex-start;
+  top: 0;
   z-index: 5;
   background-color: rgb(255, 255, 255, 0.5);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   display: flex;
   flex-direction: row;
-  height: 10%;
+  height: 8%;
   padding: 0 10rem;
 }
 
 #app, #dashboard {
-  min-height: 90%;
+  min-height: 80%;
   padding: 1rem 0;
 }
 
 #about {
-  min-height: 75%;
+  min-height: 77%;
 }
 
 #footer {
@@ -61,7 +63,7 @@ code {
   background-color: #F6F4EB;
   width: 70%;
   margin: auto;
-  min-height: 15vh;
+  min-height: 15%;
 }
 
 a {
