@@ -1,5 +1,4 @@
 #productPage {
-    height: 100%;
 }
 
 #productThumnail {
@@ -25,14 +24,9 @@
     float: left;
 }
 
-.seperator {
-    height: fit-content;
-    margin: 2em 0;
-}
-
 #additionalInfo {
     width: 100%;
-    height: 30%;
+    min-height: 40vh;
     grid-row: 2;
     text-align: left;
 }

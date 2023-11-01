@@ -14,18 +14,24 @@
     width: 50%;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 860px) {
     #footer {
         width: 100%;
-        font-size: 0.9em;
     }
     #footerChild {
         display: block;
         text-align: center;
+        padding: 0.5em 0;
     }
 
     #footerChild div {
         width: 100%;
         margin: 1em 0;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    #footerChild div {
+        font-size: 0.8em;
     }
 }

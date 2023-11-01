@@ -204,14 +204,14 @@ select {
 
 #zaloLink {
     z-index: 2;
-    position: absolute;
-    bottom: 1em;
-    left: 30%;
-    margin: 2em auto;
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 2em;
+    left: 1em;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     background-color: #fff;
     padding: 0.3em 0.3em;
     display: flex;
-    border: 1px solid #0071e3;
     border-radius: 1em;
     height: fit-content;
     width: fit-content;
@@ -250,10 +250,6 @@ select {
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
     }
 
-    #sideMenuSwitch {
-        display: block;
-    }
-
     #content {
         width: 100%;
     }
@@ -261,7 +257,7 @@ select {
 
 @media screen and (max-width: 1080px) {
     #content {
-        margin: 0;
+        margin: 0 1em;
     }
     #sideMenu {
         width: 55vw;   
@@ -283,9 +279,15 @@ select {
 @media screen and (max-width: 640px) {
     #content {
         width: 100%;
-        margin: 0 1em;
+        margin: 0;
     }
     #sideMenu {
         width: 100vw;   
+    }
+}
+
+@media screen and (max-width: 320px) {
+    #zaloLink h5 {
+        display: none;
     }
 }

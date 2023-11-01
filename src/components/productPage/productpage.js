@@ -75,9 +75,6 @@ export default function ProductPage() {
                     <h4 style={{ border: '1px solid #D8D9DA', borderRadius: '0.3em', width: 'fit-content', height: 'fit-content', padding: '0.5em', color: '#FFFFFF', backgroundColor:  product.state.quantity > 0 ? '#00C851' : '#F05E16' }}>{ product.state.quantity > 0 ? 'Còn hàng' : 'Tạm hết hàng'}</h4>
                 </div>
             </div>
-            <div className='seperator'>
-                &#9671;<hr style={{ width: '60%', margin: 'auto' }} />&#9671;
-            </div>
             <div id='additionalInfo'>
                 <h3>Thông tin chi tiết</h3>
                 <p>{ product.state.additionalInfo || 'Đang cập nhật'}</p>
