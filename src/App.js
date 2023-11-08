@@ -2,6 +2,8 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { useState, useEffect, createContext, useContext, useRef } from 'react';
 import { useCookies } from 'react-cookie';
 import { CartContext } from './AppContainer';
+import { FloatButton } from 'antd'
+import { UpOutlined } from '@ant-design/icons'
 import './App.css';
 
 export default function App() {
@@ -106,10 +108,13 @@ export default function App() {
       </div>
       <div id='content' >
           <Outlet />
-          <div id='zaloLink' onClick={() => window.open("https://zalo.me/0325646038", "_blank")}>
-            <img src='/zalo.webp' alt='zalo' />
-            <h5 >Chat với shop</h5>
-        </div>
+          <FloatButton.Group shape='square' style={{ padding: '0' }}>
+            <FloatButton shape='square' href='https://zalo.me/0868931400' tooltip='Chat với shop' target='_blank' icon={ 
+                <img style={{ width: '100%', height: '100%', objectFit: 'contain' }} src='/zalo.webp' alt='zalo' />
+            }/>
+            <FloatButton.BackTop shape='square' icon={ <UpOutlined /> } duration={300} visibilityHeight={0} tooltip='Di chuyển về đầu trang' />
+          </FloatButton.Group>
+          
       </div>
     </div>
   );

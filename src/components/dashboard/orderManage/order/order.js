@@ -57,7 +57,7 @@ export default function Order({ order }) {
 
     return (
         <div className="order">
-            <div style={{ width: '20%', position: 'relative' }}>
+            <div style={{ width: '10%', position: 'relative' }}>
                 <div className="seperateLineOrder" style={{ backgroundImage: orderColor }} ></div>
             </div>
                 <div className="orderInfo">

@@ -15,10 +15,6 @@
     border-radius: 0.25em;
     background-color: #efe5d5;
     display: flex;
-    background-image: linear-gradient(135deg, #fff 50%, transparent 50%), linear-gradient(45deg, #fff 50%, transparent 50%);
-    background-position: top left, top left, top right, top right;
-    background-size: 30px 30px;
-    background-repeat: repeat-y;
 }
 
 .seperateLineOrder {
@@ -30,7 +26,7 @@
 
 .orderInfo {
     padding-left: 1em;
-    width: 80%;
+    width: 90%;
     position: relative;
 }
 

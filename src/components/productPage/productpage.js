@@ -1,9 +1,12 @@
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { Typography } from 'antd'
 import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import { showPopup, selectTypeOfPopup } from '../popup/popup'
 import './productPage.css'
+
+const { Title, Paragraph, h3 } = Typography
 
 export default function ProductPage() {
     const navigate = useNavigate()
@@ -74,11 +77,18 @@ export default function ProductPage() {
                     </p>
                     <h4 style={{ border: '1px solid #D8D9DA', borderRadius: '0.3em', width: 'fit-content', height: 'fit-content', padding: '0.5em', color: '#FFFFFF', backgroundColor:  product.state.quantity > 0 ? '#00C851' : '#F05E16' }}>{ product.state.quantity > 0 ? 'Còn hàng' : 'Tạm hết hàng'}</h4>
                 </div>
+
             </div>
-            <div id='additionalInfo'>
+            {/* <div id='additionalInfo'>
                 <h3>Thông tin chi tiết</h3>
                 <p>{ product.state.additionalInfo || 'Đang cập nhật'}</p>
-            </div>
+            </div> */}
+            <Typography >
+                <h2>Thông tin chi tiết</h2>
+                <Paragraph style={{ padding: '0 1em' }}>
+                    { product.state.additionalInfo || 'Đang cập nhật'}
+                </Paragraph>
+            </Typography>
         </div>
     )
 }

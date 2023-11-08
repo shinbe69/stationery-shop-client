@@ -3,13 +3,15 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import './header.css'
+import { Input, Dropdown, Menu } from 'antd'
 import { selectTypeOfPopup, showPopup } from '../popup/popup'
 import Protected from '../protected/protected'
 
-
+const { Search } = Input
 export default function Header() {
     const [cookie, setCookie, removeCookie] = useCookies()
     const [user, setUser] = useState('Đăng nhập')
+    const [items, setItems] = useState([])
     const [searchResults, setSearchResults] = useState([])
     const [cartQuantity, setCartQuantity] = useContext(CartQuantityContext)
     const [cart, setCart] = useContext(CartContext)
@@ -46,10 +48,6 @@ export default function Header() {
         setCartQuantity(cart.totalQuantity || 0)
     }, [cart])
 
-    useEffect(() => {
-        document.getElementById('searchResultsDisplay').style.display = 'block'
-    }, [searchResults])
-
     function handleLogout() {
         fetch('/api/auth/logout', {
             method: 'POST',
@@ -85,52 +83,17 @@ export default function Header() {
                 body: JSON.stringify({ searchInput: event.target.value })
             })
             .then(results => results.json())
-            .then(searchResults => setSearchResults(searchResults))
-            .catch(err => console.log(err))
-        }
-        else setSearchResults([])
-    }
-
-    function handleSearchResultClick(result) {
-        // navigate('/product', { state: result })
-        fetch('/api/products/getProductsById', {
-            method: 'POST',
-            headers: {
-                "Accept": 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ productID: [result.id] })
-        })
-        .then(product => product.json())
-        .then(product => {
-            document.getElementById('searchResultsDisplay').style.display = 'none'
-            navigate('/../product', { state: product[0]})
-        })
-        .catch(err => console.log(err))
-    }
-
-    function handleKeyDown(event) {
-        if (event.key === 'Escape')
-            document.getElementById('searchResultsDisplay').style.display = 'none'
-        else if (event.key === 'Enter') {
-            let idArr = []
-            searchResults.forEach(result => {
-                idArr.push(result.id)
-            })
-            document.getElementById('searchResultsDisplay').style.display = 'none'
-            fetch('/api/products/getProductsById', {
-                method: 'POST',
-                headers: {
-                    "Accept": 'application/json',
-                    'Content-Type': 'application/json'   
-                },
-                body: JSON.stringify({ productID: idArr})
-            }).then(products => products.json())
-            .then(products => {
-                navigate('/product-filter', { state: products, replace: true })
+            .then(results => {
+                setSearchResults(results)
+                let temp = []
+                results.forEach(result => {
+                    temp.push({ label: (<p onClick={() => navigate('../product', {state: result})}>{result.name}</p>)})
+                })
+                setItems(temp)
             })
             .catch(err => console.log(err))
         }
+        else setItems([])
     }
 
     function handleCartClick() {
@@ -185,17 +148,13 @@ export default function Header() {
                 <img src='dropMenu.png' alt='side menu switch' onClick={ handleSideMenuSwitch }/>
             </div>
             <div id='search'>
-                <input type="text" onChange={ handleSearch } onClick={ handleSearch } onKeyDown={ handleKeyDown } placeholder="Nhập từ khóa để tìm sản phẩm">
-                </input>
-                <div id='searchResultsDisplay'>
-                    {searchResults.map(result => (
-                        <div onClick={() => handleSearchResultClick(result) } key={result.id}>
-                            <img src='search.png' alt='searchIcon'/>
-                            <p><i>{result.name}</i></p>
-                        </div>
-                    ))}
-                </div>
+                <Dropdown menu={{ items }} placement='bottom' trigger={['click']} >
+                    <Search placeholder="Nhập từ khóa để tìm sản phẩm" onChange={handleSearch} onSearch={handleSearch} size='large' style={{ width: '60%', margin: 'auto' }} enterButton={ <img src='search.png' style={{ maxHeight: '100%', padding: '8px', objectFit: 'contain' }}/> } onPressEnter={() => {
+                        navigate('/product-filter', { state: searchResults, replace: true }) 
+                        setItems([])}}/>
+                </Dropdown>
             </div>
+            
             <div id='userInfo'>
                 <div id='cart' >
                     <p id='productQuantityInCart'>{ cartQuantity }</p>

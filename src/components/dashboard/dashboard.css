@@ -8,9 +8,11 @@
 }
 
 #controlPanel {
-    width: 85%;
+    width: 80%;
     text-align: left;
     min-height: 100%;
+    margin: 0 2rem;
+    position: relative;
 }
 
 #addNewProduct {
