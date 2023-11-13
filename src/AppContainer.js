@@ -1,6 +1,6 @@
-import { useState, createContext } from 'react';
+import { useState, createContext, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { CookiesProvider } from 'react-cookie';
+import { CookiesProvider, useCookies } from 'react-cookie';
 import './index.css';
 import Popup from './components/popup/popup';
 import Header from './components/header/header';
@@ -11,9 +11,22 @@ export const CartContext = createContext()
 export const MessageContext = createContext()
 
 export default function AppContainer() {
-    const [cartQuantity, setCartQuantity] = useState(0)
-    const [cart, setCart] = useState({ cartItems: [], totalQuantity: 0 })
-    const [message, setMessage] = useState("")
+  const [cookie, setCookie] = useCookies()
+  const [cartQuantity, setCartQuantity] = useState(0)
+  const [cart, setCart] = useState(!cookie.cart ? { cartItems: [], totalQuantity: 0 } : cookie.cart)
+  const [message, setMessage] = useState("")
+
+  useEffect(() => {
+    if (!cookie.cart) setCookie('cart', [], {maxAge: 60*60*24*3})
+    else {
+        let quantity = 0
+        cookie.cart.forEach(item => {
+            quantity += item.quantity
+        })
+        setCartQuantity(quantity)
+        setCart(cookie.cart)
+    }
+  }, [cookie.cart])
 
   return (
     <CookiesProvider>

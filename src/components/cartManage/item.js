@@ -8,44 +8,70 @@ import { showPopup, selectTypeOfPopup } from '../popup/popup'
 export default function Item({ product }) {
     const navigate = useNavigate()
     const [cookie, setCookie] = useCookies()
-    const [cart, setCart] = useContext(CartContext)
     const [message, setMessage] = useContext(MessageContext)
-    const [cartQuantity, setCartQuantity] = useContext(CartQuantityContext)
     const [quantity, selectQuantity] = useState(product.cartQuantity)
 
     function handleChangeItemQuantity(event) {
-        let action = ''
         switch (event.target.className) {
             case 'removeCartItem':
-                action = 'removeFromCart'
+                cookie.cart.forEach((item, index) => {
+                    if (item.id === product._id) {
+                        cookie.cart.splice(index, 1)
+                        
+                    }
+                })
+                setCookie('cart', cookie.cart)
                 setMessage('Xóa sản phẩm thành công')
                 break
             case 'subtract':
-                action = 'removeFromCart'
+                cookie.cart.forEach((item, index) => {
+                    if (item.id === product._id) {
+                        if (item.quantity === 1)
+                            cookie.cart.splice(index, 1)
+                        else 
+                            item.quantity--
+                    }
+                })
+                setCookie('cart', cookie.cart)
                 setMessage('Giảm số lượng thành công')
                 break
             case 'plus':
-                action = 'addToCart'
+                cookie.cart.forEach(item => {
+                    if (item.id === product._id) {
+                        item.quantity++
+                    }
+                })
+                setCookie('cart', cookie.cart)
                 setMessage('Tăng số lượng thành công')
                 break
         }
-
-        fetch('/api/users/'.concat(action), {
-            method: 'PATCH',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: cookie.user, cart: [{id: product._id, quantity: event.target.className === 'removeCartItem' ? quantity : 1}]})
-        }).then(result => result.json())
-        .then(cart => {
-            setCartQuantity(cart.totalQuantity)
-            setCart(cart)
             selectTypeOfPopup('SUCCESS')
             showPopup()
-            updateCartManagePage(cart)
-        })
-        .catch(error => console.log(error))
+            let idArr = []
+            cookie.cart.forEach(item => {
+                idArr.push(item.id)
+            })
+
+            fetch('/api/products/getProductsById', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ productID: idArr })
+            }).then(res => res.json())
+            .then(products => {
+                products.forEach((product) => {
+                    cookie.cart.forEach(item => {
+                        if (item.id === product._id)
+                            product.cartQuantity = item.quantity
+                    })
+                })
+                navigate('/cart-manage', {
+                    state: products
+                })
+            })
+            .catch(error => console.log(error))
     }
 
     function updateCartManagePage(inputCart) {

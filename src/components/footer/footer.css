@@ -1,13 +1,15 @@
-#footer {
-    padding: 1em;
-    height: fit-content;
-}
-
 #footerChild {
     font-size: large;
     display: flex;
     padding: 0.2em 0;
     text-align: left;
+}
+
+#footerChild img {
+    width: 5em;
+    height: 5em;
+    margin: 0 0.5em;
+    object-fit: contain;
 }
 
 #footerChild div {
@@ -18,6 +20,11 @@
     #footer {
         width: 100%;
     }
+
+    #footer hr {
+        margin: 0 3em;
+    }
+
     #footerChild {
         display: block;
         text-align: center;
@@ -27,6 +34,10 @@
     #footerChild div {
         width: 100%;
         margin: 1em 0;
+    }
+
+    #footerChild div img{
+        margin: auto;
     }
 }
 

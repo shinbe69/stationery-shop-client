@@ -4,8 +4,9 @@
 }
 
 #sideMenu {
+    padding: 1em 0.5em ;
     position: sticky;
-    top: 10%;
+    top: 8%;
     border-radius: 0.5em;
     z-index: 4;
     width: 20%;
@@ -67,7 +68,7 @@
 
 #content {
     width: 80%;
-    margin: 0 2rem;
+    padding: 0 0.5em;
     position: relative;
 }
 
@@ -246,7 +247,9 @@ select {
         width: 100%;
     }
     #sideMenu {
-        background-color: #EEEEEE;
+        background-color: rgb(255, 255, 255, 0.5);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
         transform: translateX(-100vw);
         position: absolute;
         width: 35vw;
@@ -259,9 +262,6 @@ select {
 } 
 
 @media screen and (max-width: 1080px) {
-    #content {
-        margin: 0 1em;
-    }
     #sideMenu {
         width: 55vw;   
     }

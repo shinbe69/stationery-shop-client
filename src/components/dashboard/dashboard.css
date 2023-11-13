@@ -39,7 +39,6 @@
     outline: none;
     background-color: #F6F4EB;
     border: 1px solid #D8D9DA;
-    font-size: large;
     padding: 1em;
 }
 
@@ -48,7 +47,7 @@ select {
 }
 
 .inputProductInfo input[type=number] {
-       font-style: italic;
+    font-style: italic;
 }
 
 .inputProductInfo input[type=file] {
@@ -56,7 +55,6 @@ select {
     height: 60%;
     border-radius: 0.8em;
     outline: none;
-    font-size: large;
     padding: 1em;
 }
 
@@ -80,12 +78,10 @@ select {
 #additionalInfoInput:focus {
     outline: 2px solid #0071e3;
     border: none;
-    font-size: larger;
     padding: 1em;
 }
 
 #additionalInfoInput:placeholder-shown {
-    font-size: large;
     padding: 1em;
 }
 

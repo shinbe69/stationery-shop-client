@@ -5,7 +5,7 @@
 #productContainer {
     margin: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     column-gap: 2rem;
     row-gap: 2rem;
     transition: all 0.55s;
@@ -43,66 +43,99 @@
 .product {
     position: relative;
     overflow: hidden;
-    height: 25vh;
+    height: 35vh;
     background-color: #F4EEEE;
-    padding: 0.5em;
     border-radius: 10px;
     transition-property: all;
     transition-duration: 0.2s;
 }
 
 .productThumnail {
-    height: 50%;
+    height: 70%;
     width: 100%;
     overflow: hidden;
     border-radius: 5px;
 }
 
 .productInfo {
-    padding-top: 1rem;
-    height: 50%;
+    padding: 1em;
+    font-size: 0.9em;
+    height: 30%;
     display: grid;
     grid-template-rows: auto auto;
 }
 
 .productInfo > p {
-    margin: auto;
+    white-space: nowrap;
+    text-align: left;
 }
 
 .product:hover {
+    .productThumnailImg {
+        transform: scale(1.1);
+    }
+    .addToCartButton {
+        transform: translateY(0);
+    }
     cursor: pointer;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
-.productThumnail img{
+.productThumnailImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+    transition-property: all;
+    transition-duration: 0.2s;
+}
+
+.addToCartButton {
+    z-index: 3;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    padding: 0.4em;
+    position: absolute;
+    bottom: 0.2em;
+    right: 0.2em;
+    transform: translateY(10vh);
+    transition-duration: 0.3s;
+    background-color: rgb(48, 180, 44);
+}
+
+.addToCartButton:hover {
+    cursor: pointer;
+}
+
+.addToCartButton img {
     width: 100%;
     height: 100%;
     object-fit: contain;
-    margin: auto;
-    transition-property: all;
-    transition-duration: 0.4s;
-    border-radius: 5px;
 }
 
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1024px) {
+    .productInfo {
+        padding: 0;
+    }
     #productContainer {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 768px) {
     #productContainer {
         margin: 1rem 0;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         column-gap: 1rem;
         row-gap: 1rem;
     }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 425px) {
     #productContainer {
         margin: 1rem 1rem;
-        grid-template-columns: repeat(1, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         column-gap: 1rem;
         row-gap: 1rem;
     }

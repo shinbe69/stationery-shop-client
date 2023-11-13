@@ -1,8 +1,10 @@
 #sideMenuSwitch {
-    display: flex;
-    visibility: hidden;
-    height: 100%;
-    width: 5%;
+    
+    left: 1em;
+    margin: auto;
+    object-fit: contain;
+    height: 2em;
+    width: 2em;
     padding: 0;
     border-radius: 10px;
     z-index: 5;
@@ -11,14 +13,6 @@
 
 #sideMenuSwitch:hover {
     cursor: pointer;
-}
-
-#sideMenuSwitch img{
-    display: flex;
-    width: 1.5em;
-    height: 1.5em;
-    margin: auto;
-    object-fit: contain;
 }
 
 #logo {
@@ -48,58 +42,6 @@
     font-size: 1.1em;
 }
 
-#searchResultsDisplay {
-    display: none;
-    font-size: 1em;
-    animation-name: fadeIn;
-    animation-duration: 0.2s;
-    text-align: left;
-    position: absolute;
-    top: 10vh;
-    width: 70%;
-    left: 15%;
-    height: fit-content;
-    background-color: #FFFFFF;
-    border: none;
-    border-radius: 20px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-    overflow: hidden;
-}
-
-#searchResultsDisplay div {
-    display: flex;
-    margin: 0.5em 0;
-}
-
-#searchResultsDisplay div:hover {
-    cursor: pointer;
-    background-color: #91C8E4;
-}
-
-#searchResultsDisplay img {
-    margin: auto;
-    width: 10%;
-    height: 1.3em;
-    width: 1.3em;
-    object-fit: contain;
-}
-
-#searchResultsDisplay p {
-    margin: auto;
-    width: 90%;
-    padding: 0 1em;
-    white-space: nowrap;
-}
-
-/* #search input:focus {
-    border: 2px solid #91C8E4;
-}
-
-input:placeholder-shown {
-    font-style: italic;
-    padding: 2em;
-} */
-
 #userInfo {
     margin: auto;
     width: 25%;
@@ -115,11 +57,9 @@ input:placeholder-shown {
 }
 
 #user {
-    position: relative;
     height: 100%;
     width: 50%;
     display: flex;
-    overflow: hidden;
 }
 
 #productQuantityInCart {
@@ -131,8 +71,8 @@ input:placeholder-shown {
     position: absolute;
     top: 0;
     left: 55%;
-    height: 1.75em;
-    width: 1.75em;
+    height: 1.5em;
+    width: 1.5em;
     color: #FFFFFF;
     background-color: green;
     display: flex;
@@ -141,27 +81,25 @@ input:placeholder-shown {
 }
 
 #cart img{
-    height: 2em;
+    height: 100%;
     margin: auto;
     object-fit: contain;
     cursor: pointer;
     border-radius: 50%;
 }
 
-#logout {
-    background-color: #F6F4EB;
-    position: absolute;
-    top: calc((100% - 1.5em)/2);
-    right: 0;
-    z-index: 2;
-    display: none;
-    height: 1.5em;
-    width: 1.5em;
-    margin: auto;
-    margin-right: 0.2em;
+#loginLink {
 }
 
-#logout:hover {
+#userIcon {
+    display: none;
+    z-index: 2;
+    height: 80%;
+    object-fit: contain;
+    margin: auto;
+}
+
+#userIcon:hover {
     cursor: pointer;
 }
 

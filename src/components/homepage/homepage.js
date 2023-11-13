@@ -7,6 +7,13 @@ import Product from '../product/product'
 
 
 export default function Homepage() {
+    const contentStyle = {
+        height: '160px',
+        color: '#fff',
+        lineHeight: '160px',
+        textAlign: 'center',
+        background: '#364d79',
+      };
     const navigate = useNavigate()
     const [bestSelling, setBestSelling] = useState([])
     const [recentProducts, setRecentProducts] = useState([])
@@ -52,42 +59,24 @@ export default function Homepage() {
     return (
         <div id="homepage">
             {bestSelling.length !== 0 ? 
-            <>
-                <h3 style={{ textAlign: 'left', margin: '1em 0' }} >Sản phẩm bán chạy</h3>
-                {/* <div id='slideShow'>
-                    
-                    <div id='item' onClick={() => navigate('/product', {
-                        state: bestSelling
-                    })}>
-                        <img src={bestSelling.thumnail} alt='popular item'  />
-                    </div>
-                    <div id='itemInfo'>
-                        <p style={{ fontWeight: 'bold' }}>{ bestSelling.name }</p>
-                        <hr style={{ width: '60%', margin: 'auto' }} />
-                        <p id='itemDescription'>{ bestSelling.description }</p>
-                    </div>
-                    
-                </div> */}
-                <Carousel autoplay autoplaySpeed={8000} style={{ height: '45vh', padding: '0' }}>
+            <div id='highlight' >
+                <Carousel autoplay autoplaySpeed={8000} >
                     {bestSelling.map(item => (
                         <div key={item._id} className='item' onClick={() => navigate('/product', {
                             state: item
                         })}>
                             <img src={item.thumnail} alt='popular item'  />
                             <div className='itemInfo'>
-                            <p style={{ fontWeight: 'bold' }}>{ item.name }</p>
-                            <div className='separator' />
-                            <p className='itemDescription'>{ item.description }</p>
-                        </div>
+                                <p style={{ fontWeight: 'bold' }}>{ item.name }</p>
+                                <div className='separator' style={{ backgroundColor: '#52b788' }} />
+                                <p className='itemDescription'>{ item.description.substring(0, 100).concat('...') }</p>
+                            </div>
                         </div>
                     ))}
                 </Carousel>
-                {/* <Carousel autoplay style={{ height: '45vh' }}>
-                    {bestSelling.map(item => (
-                        <h2>{item.name}</h2>
-                    ))}
-                </Carousel> */}
-            </> : <></> }
+                <div id='banner'>
+                </div>
+            </div> : <></> }
             <h3 style={{ textAlign: 'left', margin: '1em 0', textDecoration: 'underline' }} >Sản phẩm mới thêm gần đây</h3>
             <div id='recentProducts'>
                 { recentProducts.map(product => (

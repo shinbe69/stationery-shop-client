@@ -24,19 +24,19 @@ export default function CartManage () {
     })
 
     useEffect(() => {
-        fetch('/api/users/getUser', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ username: cookie.user })
-        }).then(result => result.json())
-        .then(user => {
-            setAddress(user.address)
-            setPhone(user.phoneNumber)
-        })
-        .catch(error => console.log(error))
+        // fetch('/api/users/getUser', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({ username: cookie.user })
+        // }).then(result => result.json())
+        // .then(user => {
+        //     setAddress(user.address)
+        //     setPhone(user.phoneNumber)
+        // })
+        // .catch(error => console.log(error))
     }, [])
 
 
@@ -109,16 +109,9 @@ export default function CartManage () {
             }
         }
     }
-
-    function handleShowOrders() {
-        navigate('/order-manage', {
-            state: true
-        })
-    }
     
     return (
         <div id="cartManage">
-            <button id='showOrders' onClick={ handleShowOrders }>Xem đơn hàng</button>
             <h2>Các sản phẩm đang chờ trong giỏ hàng</h2>
             <div id='cartItemsContainer'>
                 <div id='cartListHeader' >
@@ -157,7 +150,7 @@ export default function CartManage () {
                         </select>
                     </div>
                     <div id='purchaseContainer'>
-                        <h3 style={{ textDecoration: 'underline', marginBottom: '1em' }}>Thành tiền: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice) }</h3>
+                        <h3 style={{ textDecoration: 'underline', marginBottom: '1em' }}>Tạm tính: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice) }</h3>
                         <button id='purchase' onClick={ handlePurchase } >{ buttonContent }</button>
                     </div>
                 </div>

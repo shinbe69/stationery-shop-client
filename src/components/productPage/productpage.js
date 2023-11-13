@@ -18,31 +18,51 @@ export default function ProductPage() {
     const [message, setMessage] = useContext(MessageContext)
 
     function handleAddToCart() {
-        if (typeof cookie.user !== 'undefined') {
-            fetch('/api/users/addToCart', {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: cookie.user, cart: [{id: product.state._id, quantity}]})
-            }).then(result => result.json())
-            .then(cart => {
-                setCartQuantity(cart.totalQuantity)
-                setCart(cart)
-                selectTypeOfPopup('SUCCESS')
-                setMessage('Thêm vào giỏ thành công')
-                showPopup()
-            })
-            .catch(error => console.log(error))
-        }
-        else {
-            navigate('/login')
-            selectTypeOfPopup('WARNING')
-            setMessage('Bạn vui lòng đăng nhập để thêm vào giỏ hàng')
-            showPopup()
-        }
+        // if (typeof cookie.user !== 'undefined') {
+        //     fetch('/api/users/addToCart', {
+        //         method: 'PATCH',
+        //         headers: {
+        //             'Accept': 'application/json',
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify({ username: cookie.user, cart: [{id: product.state._id, quantity}]})
+        //     }).then(result => result.json())
+        //     .then(cart => {
+        //         setCartQuantity(cart.totalQuantity)
+        //         setCart(cart)
+        //         selectTypeOfPopup('SUCCESS')
+        //         setMessage('Thêm vào giỏ thành công')
+        //         showPopup()
+        //     })
+        //     .catch(error => console.log(error))
+        // }
+        // else {
+        //     navigate('/login')
+        //     selectTypeOfPopup('WARNING')
+        //     setMessage('Bạn vui lòng đăng nhập để thêm vào giỏ hàng')
+        //     showPopup()
+        // }
+        cookie.cart.push({id: product.state._id, quantity})
+        let prepareCart = cookie.cart.reduce(mergeCart, [])
+        setCookie('cart', prepareCart)
+        selectTypeOfPopup('SUCCESS')
+        setMessage('Thêm vào giỏ thành công')
+        showPopup()
     }
+
+    function mergeCart(accumulator, currentValue) {
+        let isMerge = false
+        accumulator.forEach((cartItem) => {
+          if (currentValue.id === cartItem.id) {
+                cartItem.quantity += currentValue.quantity
+                isMerge = true
+                return
+          }
+        })
+        if (!isMerge)
+          accumulator.push(currentValue)
+        return accumulator
+      }
 
     return (
         <div id="productPage" >

@@ -3,9 +3,10 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import './header.css'
-import { Input, Dropdown, Menu } from 'antd'
+import { Input, Dropdown, Menu, Avatar } from 'antd'
 import { selectTypeOfPopup, showPopup } from '../popup/popup'
 import Protected from '../protected/protected'
+import { UserOutlined } from '@ant-design/icons'
 
 const { Search } = Input
 export default function Header() {
@@ -18,35 +19,24 @@ export default function Header() {
     const [message, setMessage] = useContext(MessageContext)
     const navigate = useNavigate()
     const location = useLocation()
+    const userMenu = (
+        <Menu>
+            <Menu.Item key='1' disabled>{user}</Menu.Item>
+            <Menu.Item key='2' danger onClick={handleLogout}>Đăng xuất</Menu.Item>
+        </Menu>
+    )
 
     useEffect(() => {
         if ((typeof cookie.user) !== 'undefined') {
-            fetch('/api/users/addToCart', {
-                method: 'PATCH',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ username: cookie.user, cart: []})
-            })
-            .then(res => res.json())
-            .then((cart) => {
-                setCart(cart)
-            })
-            .catch(error => console.log(error))
-            setUser('Chào '.concat(cookie.user))
-            document.getElementById('logout').style.display = 'block'
+            document.getElementById('loginLink').style.display = 'none'
+            document.getElementById('userIcon').style.display = 'block'
+            setUser(cookie.user)
         }
         else {
-            document.getElementById('logout').style.display = 'none'
-            setUser('Đăng nhập')
-            setCart({ cartItems: [], totalQuantity: 0 })
+            document.getElementById('userIcon').style.display = 'none'
+            document.getElementById('loginLink').style.display = 'block'
         }
     }, [cookie.user])
-
-    useEffect(() => {
-        setCartQuantity(cart.totalQuantity || 0)
-    }, [cart])
 
     function handleLogout() {
         fetch('/api/auth/logout', {
@@ -97,39 +87,32 @@ export default function Header() {
     }
 
     function handleCartClick() {
-        if (typeof cookie.user !== 'undefined') {
-            let idArr = []
-            cart.cartItems.forEach(item => {
-                idArr.push(item.id)
-            })
+    
+        let idArr = []
+        cart.forEach(item => {
+            idArr.push(item.id)
+        })
 
-            fetch('/api/products/getProductsById', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ productID: idArr })
-            }).then(res => res.json())
-            .then(products => {
-                products.forEach((product) => {
-                    cart.cartItems.forEach(item => {
-                        if (item.id === product._id)
-                            product.cartQuantity = item.quantity
-                    })
-                })
-                navigate('/cart-manage', {
-                    state: products
+        fetch('/api/products/getProductsById', {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ productID: idArr })
+        }).then(res => res.json())
+        .then(products => {
+            products.forEach((product) => {
+                cart.forEach(item => {
+                    if (item.id === product._id)
+                        product.cartQuantity = item.quantity
                 })
             })
-            .catch(error => console.log(error))
-        }
-        else {
-            navigate('/login')
-            selectTypeOfPopup('WARNING')
-            setMessage('Bạn vui lòng đăng nhập để xem giỏ hàng')
-            showPopup()
-        }
+            navigate('/cart-manage', {
+                state: products
+            })
+        })
+        .catch(error => console.log(error))
     }
 
     function handleSideMenuSwitch() {
@@ -142,14 +125,11 @@ export default function Header() {
     return (
         <div id="header">
             <div id='logo'>
-                <a href='/'><img src='logo.jpg' alt='logo' /></a>
-            </div>
-            <div id='sideMenuSwitch' >
-                <img src='dropMenu.png' alt='side menu switch' onClick={ handleSideMenuSwitch }/>
+                <a href='/'><img src='logo.png' alt='logo' /></a>
             </div>
             <div id='search'>
                 <Dropdown menu={{ items }} placement='bottom' trigger={['click']} >
-                    <Search placeholder="Nhập từ khóa để tìm sản phẩm" onChange={handleSearch} onSearch={handleSearch} size='large' style={{ width: '60%', margin: 'auto' }} enterButton={ <img src='search.png' style={{ maxHeight: '100%', padding: '8px', objectFit: 'contain' }}/> } onPressEnter={() => {
+                    <Search placeholder="Nhập từ khóa để tìm sản phẩm" onChange={handleSearch} onSearch={handleSearch} size='large' style={{ width: '90%', margin: 'auto' }} enterButton={ <img src='search.png' style={{ maxHeight: '100%', padding: '8px', objectFit: 'contain' }}/> } onPressEnter={() => {
                         navigate('/product-filter', { state: searchResults, replace: true }) 
                         setItems([])}}/>
                 </Dropdown>
@@ -161,10 +141,14 @@ export default function Header() {
                     <img src='cart.png' alt='cart' onClick={ handleCartClick }/>
                 </div>
                 <div id='user'>
-                    <a href='/login' style={{textDecoration: cookie.user ? 'none' : 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden', pointerEvents: cookie.user ? 'none' : 'auto'}} >{ user }</a>
-                    <img id='logout' onClick={ handleLogout } src='logout.png' alt='logout' />
+                    <a id='loginLink' href='/login' style={{textDecoration: 'underline', color: '#0474e4', margin: 'auto', whiteSpace: 'nowrap', overflow: 'hidden'}} >Đăng nhập</a>
+                    <Dropdown dropdownRender={() => (userMenu)} arrow placement='bottom'>
+                        <img id='userIcon' src='user.png' alt='user'/>
+                        {/* <Avatar id='userIcon' shape='square' icon={<UserOutlined />}/> */}
+                    </Dropdown>
                 </div>
             </div>
+            <div className='separator' />
         </div>
     )
 }
