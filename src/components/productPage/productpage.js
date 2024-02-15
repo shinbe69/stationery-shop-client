@@ -73,13 +73,11 @@ export default function ProductPage() {
                 <div id='addToCartSection'>
                     <p style={{ whiteSpace: 'nowrap', color: '#999' }}>Số lượng</p>
                     <div id='selectQuantity'>
-                        <div style={{ fontWeight: 'bold', width: '25%', display: 'flex' }} onClick={() => quantity === 1 ? {} : selectQuantity(quantity - 1) }>
+                        <div id='subtractButton' style={{ fontWeight: 'bold', width: '25%', display: 'flex' }} onClick={() => quantity === 1 ? {} : selectQuantity(quantity - 1) }>
                             <p>-</p>
                         </div>
-                        <hr style={{ margin: '0.4em 0' }} />
                         <p id='quantity' style={{ fontWeight: 'bold', width: '50%', textAlign: 'center' }}>{quantity}</p>
-                        <hr style={{ margin: '0.4em 0' }} />
-                        <div style={{ fontWeight: 'bold', width: '25%', display: 'flex' }} onClick={() => selectQuantity(quantity + 1) }>
+                        <div id='plusButton' style={{ fontWeight: 'bold', width: '25%', display: 'flex' }} onClick={() => selectQuantity(quantity + 1) }>
                             <p >+</p>
                         </div>
                     </div>
@@ -89,12 +87,12 @@ export default function ProductPage() {
                     </div>
                 </div>
                 <div id='specificInfo'>
-                    <h3>Thông tin sản phẩm</h3>
+                    <h2>Thông tin sản phẩm</h2>
                     <p><label style={{ color: '#999' }} >Tên:</label> &ensp;{ product.state.name }</p>
-                    <p><label style={{ color: '#999' }}>Mô tả:</label> &ensp;{ product.state.description }</p>
                     <p style={{ color: '#FF9B9B' }}><label style={{ color: '#999' }}>Giá:</label> &ensp;
                         <b>{new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.state.price) }</b>
                     </p>
+                    <p><label style={{ color: '#999' }}>Mô tả:</label> &ensp;{ product.state.description }</p>
                     <h4 style={{ border: '1px solid #D8D9DA', borderRadius: '0.3em', width: 'fit-content', height: 'fit-content', padding: '0.5em', color: '#FFFFFF', backgroundColor:  product.state.quantity > 0 ? '#00C851' : '#F05E16' }}>{ product.state.quantity > 0 ? 'Còn hàng' : 'Tạm hết hàng'}</h4>
                 </div>
 
@@ -104,8 +102,8 @@ export default function ProductPage() {
                 <p>{ product.state.additionalInfo || 'Đang cập nhật'}</p>
             </div> */}
             <Typography >
-                <h2>Thông tin chi tiết</h2>
-                <Paragraph style={{ padding: '0 1em' }}>
+                <h3>Thông tin chi tiết</h3>
+                <Paragraph>
                     { product.state.additionalInfo || 'Đang cập nhật'}
                 </Paragraph>
             </Typography>

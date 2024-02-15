@@ -21,7 +21,7 @@ export default function App() {
   })
 
   useEffect(() => {
-    fetch('/api/getCategories')
+    fetch('/api/category')
     .then(res => res.json())
     .then(categories => setCategories(categories))
   }, [])
@@ -29,8 +29,12 @@ export default function App() {
   useEffect(() => {
     if (category !== '') {
       // Show clear category button
-      if (document.getElementById('sideMenu').style.transform !== '')
-        document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
+      if (document.getElementById('sideMenu').style.display === 'block') {
+        document.getElementById('sideMenu').style.animationName = 'fadeOut'
+        setTimeout(() => {
+          document.getElementById('sideMenu').style.display = 'none'
+        }, 200)
+      }
       navigate('/product-filter', {
         state: category
       })
@@ -39,15 +43,19 @@ export default function App() {
   }, [category])
 
   function handleHideSideMenu() {
-    if (document.getElementById('sideMenu').style.transform !== '')
-        document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
+    if (document.getElementById('sideMenu').style.display === 'block') {
+      document.getElementById('sideMenu').style.animationName = 'fadeOut'
+      setTimeout(() => {
+        document.getElementById('sideMenu').style.display = 'none'
+      }, 200)
+    }
   }
 
   return (
     <div id='app'>
       <div id="sideMenu" >
         <div className='categoryContainer'>
-          <h4 style={{ textDecoration: 'underline' }}>Danh mục sản phẩm</h4>
+          <h4 style={{ textDecoration: 'underline' }}>Danh mục sản phẩm phổ biến</h4>
           {categories.map(category => (
             <div className="categoryItem" key={ category._id } onClick={ () => setCategory(category._id) } style={ category._id === category ? { backgroundColor: '#dedcdc' } : {}} >
               <img src={ category.thumnail } alt="category item" />
@@ -101,6 +109,26 @@ export default function App() {
                     <img src='./pending-order.png' alt="category item" />
                     <hr style={{ margin: '0 1rem' }} />
                     <p>Quản lý đơn hàng</p>
+                </div>
+                <div className='categoryItem' onClick={() => {
+                  handleHideSideMenu()
+                  navigate('/order-manage', {
+                    state: cookie.isAdmin
+                })
+                }}>
+                    <img src='./megaphone.png' alt="category item" />
+                    <hr style={{ margin: '0 1rem' }} />
+                    <p>Quản lý banner</p>
+                </div>
+                <div className='categoryItem' onClick={() => {
+                  handleHideSideMenu()
+                  navigate('/order-manage', {
+                    state: cookie.isAdmin
+                })
+                }}>
+                    <img src='./chart.png' alt="category item" />
+                    <hr style={{ margin: '0 1rem' }} />
+                    <p>Thống kê doanh số</p>
                 </div>
             </div>
           : <></>

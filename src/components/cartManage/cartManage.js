@@ -12,7 +12,6 @@ export default function CartManage () {
     const [cookie, setCookie, removeCookie] = useCookies()
     const navigate = useNavigate()
     const products = useLocation().state
-    const [address, setAddress] = useState('')
     const [phone, setPhone] = useState('')
     const [buttonContent, setButtonContent] = useState('Đặt hàng')
     const intervalID = useRef()
@@ -41,9 +40,9 @@ export default function CartManage () {
 
 
     function handlePurchase() {
-        if (address === '') {
+        if (phone === '') {
             selectTypeOfPopup('WARNING')
-            setMessage('Bạn chưa có thông tin địa chỉ trong hệ thống. Vui lòng bổ sung thêm')
+            setMessage('Bạn chưa nhập số điện thoại!')
             showPopup()
         }
         else {
@@ -52,35 +51,25 @@ export default function CartManage () {
                 products.forEach(product => {
                     prepareItems.push({ id: product._id, quantity: product.cartQuantity })
                 })
-                fetch('/api/orders/createOrder', {
+                fetch('/api/orders/', {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ items: prepareItems, address, username: cookie.user, value: totalPrice })
+                    body: JSON.stringify({ items: prepareItems, phone, value: totalPrice })
                 }).then(res => res.json())
                 .then(orderID => {
-                    fetch('/api/users/removeFromCart', {
-                        method: 'PATCH',
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ username: cookie.user, cart: cart.cartItems})
-                    }).then(result => result.json())
-                    .then(cart => {
-                        setCart({ cartItems: [], totalQuantity: 0 })
-                        selectTypeOfPopup('SUCCESS')
-                        setMessage('Đơn hàng được tạo thành công, vui lòng chờ xác nhận từ nhân viên')
-                        showPopup()
-                        setTimeout(() => {
-                            navigate('/order-manage', {
-                                state: true
-                            })
-                        }, 700)
-                    })
-                    .catch(error => console.log(error))
+                    setCart({ cartItems: [], totalQuantity: 0 })
+                    removeCookie('cart')
+                    selectTypeOfPopup('SUCCESS')
+                    setMessage('Đơn hàng được tạo thành công, vui lòng chờ xác nhận từ nhân viên')
+                    showPopup()
+                    setTimeout(() => {
+                        navigate('/', {
+                            state: true
+                        })
+                    }, 700)
                 })
                 .catch(error => {
                     console.log(error)
@@ -109,6 +98,10 @@ export default function CartManage () {
             }
         }
     }
+
+    function handleChange(event) {
+        setPhone(event.target.value)
+    }
     
     return (
         <div id="cartManage">
@@ -129,25 +122,22 @@ export default function CartManage () {
             { products.length === 0 ? <h3>Giỏ hàng của bạn đang trống</h3> : <>
             <div className='seperateLine'></div>
                 <div id='paymentInfo' >
-                    
-                    <div id='addressConfirm'>
-                        <h3 style={{ textDecoration: 'underline' }}>Địa chỉ giao hàng:</h3>
-                        <p>{ !address ? 'Bạn chưa có thông tin địa chỉ' : address}</p>
-                        { !phone ? <></> : <p>Số điện thoại: { phone }</p> }
-                        <p id='changeAddress' onClick={ () => navigate('/update-user-info', {
-                            state: {
-                                username: cookie.user,
-                                onlyUpdateAddress: !address ? false : true,
-                                navigateBack : true
-                            }
-                        })}>{!address ? 'Bổ sung' : 'Thay đổi địa chỉ'}</p>
-                    </div>
-                    <div id='paymentMethod'>
-                        <h3 style={{ textDecoration: 'underline', marginBottom: '1em' }}>Phương thức thanh toán:</h3>
-                        <select style={{ width: '100%', height: '3em', padding: '0.2em', fontSize: '1em' }}>
-                            <option>Thanh toán khi nhận hàng (COD)</option>
-                            <option disabled>Thanh toán qua thẻ ATM nội địa (đang phát triển)</option>
-                        </select>
+                    <div >
+                        <div id='addressConfirm'>
+                            <h3 style={{ textDecoration: 'underline' }}>Số điện thoại đặt hàng:</h3>
+                            { !cookie.phone ? 
+                            <div className='inputProductInfo'>
+                                <input type="text" name="street" value={ phone } onChange={ handleChange } placeholder="Nhập số điện thoại" style={{ width: '100%', height: '3em', padding: '0.2em', fontSize: '1em' }}/>
+                            </div> : <p>Số điện thoại: { cookie.phone }</p> }
+                            
+                        </div>
+                        <div id='paymentMethod'>
+                            <h3 style={{ textDecoration: 'underline', marginBottom: '1em' }}>Phương thức thanh toán:</h3>
+                            <select style={{ width: '100%', height: '3em', padding: '0.2em', fontSize: '1em' }}>
+                                <option>Thanh toán khi nhận hàng (COD)</option>
+                                <option disabled>Thanh toán qua thẻ ATM nội địa (đang phát triển)</option>
+                            </select>
+                        </div>
                     </div>
                     <div id='purchaseContainer'>
                         <h3 style={{ textDecoration: 'underline', marginBottom: '1em' }}>Tạm tính: {new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(totalPrice) }</h3>

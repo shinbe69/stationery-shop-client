@@ -16,7 +16,7 @@ export default function AddNewProduct() {
     const [additionalInfo, setAdditionalInfo] = useState('')
 
     useEffect(() => {
-        fetch('/api/getCategories')
+        fetch('/api/category')
         .then(res => res.json())
         .then(categories => setCategories(categories))
       }, [])
@@ -69,7 +69,7 @@ export default function AddNewProduct() {
             showPopup()
         }
         else {
-            fetch('/api/products/createProduct', {
+            fetch('/api/products/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

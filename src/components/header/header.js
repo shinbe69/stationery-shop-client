@@ -3,7 +3,7 @@ import { useContext, useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { CartQuantityContext, CartContext, MessageContext } from '../../AppContainer'
 import './header.css'
-import { Input, Dropdown, Menu, Avatar } from 'antd'
+import { Input, Dropdown, Menu, Avatar, Button } from 'antd'
 import { selectTypeOfPopup, showPopup } from '../popup/popup'
 import Protected from '../protected/protected'
 import { UserOutlined } from '@ant-design/icons'
@@ -13,6 +13,7 @@ export default function Header() {
     const [cookie, setCookie, removeCookie] = useCookies()
     const [user, setUser] = useState('Đăng nhập')
     const [items, setItems] = useState([])
+    const [showMenu, setShowMenu] = useState('default')
     const [searchResults, setSearchResults] = useState([])
     const [cartQuantity, setCartQuantity] = useContext(CartQuantityContext)
     const [cart, setCart] = useContext(CartContext)
@@ -33,6 +34,7 @@ export default function Header() {
             setUser(cookie.user)
         }
         else {
+            document.getElementById('userIcon').style.display = 'none'
             document.getElementById('userIcon').style.display = 'none'
             document.getElementById('loginLink').style.display = 'block'
         }
@@ -115,12 +117,39 @@ export default function Header() {
         .catch(error => console.log(error))
     }
 
-    function handleSideMenuSwitch() {
-        if (document.getElementById('sideMenu').style.transform === 'translateX(-100vw)' || document.getElementById('sideMenu').style.transform === '')
-            document.getElementById('sideMenu').style.transform = 'translateX(0vw)'
-        else
-            document.getElementById('sideMenu').style.transform = 'translateX(-100vw)'
+    function handleSearchLogoClick() {
+        document.getElementById('logo').style.display = 'none'
+        document.getElementById('userInfo').style.display = 'none'
+        document.getElementById('searchLogo').style.display = 'none'
+        document.getElementById('dropMenu').style.display = 'none'
+        document.getElementById('search').style.width = '100%'
+        document.getElementsByClassName('ant-input-group-wrapper')[0].style.display = 'block'
+        document.getElementById('back2FullHeader').style.display = 'block'
+        
     }
+
+    function handleBack () {
+        document.getElementById('logo').style.display = 'block'
+        document.getElementById('userInfo').style.display = 'flex'
+        document.getElementById('searchLogo').style.display = 'block'
+        document.getElementById('dropMenu').style.display = 'block'
+        document.getElementById('search').style.width = '30%'
+        document.getElementsByClassName('ant-input-group-wrapper')[0].style.display = 'none'
+        document.getElementById('back2FullHeader').style.display = 'none'
+    }
+
+    useEffect(() => {
+        if (showMenu === 'show') {
+            document.getElementById('sideMenu').style.animationName = 'fadeIn'
+            document.getElementById('sideMenu').style.display = 'block'
+        }
+        else if (showMenu === 'hide'){
+            document.getElementById('sideMenu').style.animationName = 'fadeOut'
+            setTimeout(() => {
+                document.getElementById('sideMenu').style.display = 'none'
+            }, 200)
+        }
+    }, [showMenu])
 
     return (
         <div id="header">
@@ -128,8 +157,11 @@ export default function Header() {
                 <a href='/'><img src='logo.png' alt='logo' /></a>
             </div>
             <div id='search'>
-                <Dropdown menu={{ items }} placement='bottom' trigger={['click']} >
-                    <Search placeholder="Nhập từ khóa để tìm sản phẩm" onChange={handleSearch} onSearch={handleSearch} size='large' style={{ width: '90%', margin: 'auto' }} enterButton={ <img src='search.png' style={{ maxHeight: '100%', padding: '8px', objectFit: 'contain' }}/> } onPressEnter={() => {
+                <img alt='drop-menu' src='dropMenu.png' id='dropMenu' onClick={() => showMenu === 'hide' || showMenu === 'default' ? setShowMenu('show') : setShowMenu('hide')} />
+                <img alt='search-logo' src='search.png' id='searchLogo' onClick={handleSearchLogoClick} />
+                <img id='back2FullHeader' src='back.png' alt='back' onClick={handleBack}/>
+                <Dropdown menu={{ items }} placement='bottom' trigger={['click']} style={{ padding: '0' }} >
+                    <Search placeholder="Nhập từ khóa để tìm sản phẩm" onChange={handleSearch} onSearch={handleSearch} size='large' enterButton={ <img src='search.png' style={{ maxHeight: '100%', padding: '8px', objectFit: 'contain' }} alt='search-button'/> } onPressEnter={() => {
                         navigate('/product-filter', { state: searchResults, replace: true }) 
                         setItems([])}}/>
                 </Dropdown>
@@ -148,7 +180,6 @@ export default function Header() {
                     </Dropdown>
                 </div>
             </div>
-            <div className='separator' />
         </div>
     )
 }

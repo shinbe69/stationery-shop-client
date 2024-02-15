@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Carousel } from 'antd'
+import { Carousel, Button } from 'antd'
 import './homepage.css'
 import ProductSection from '../productSection/productSection'
 import Product from '../product/product'
@@ -17,6 +17,8 @@ export default function Homepage() {
     const navigate = useNavigate()
     const [bestSelling, setBestSelling] = useState([])
     const [recentProducts, setRecentProducts] = useState([])
+    const [showButtonContent, setShowButtonContent] = useState('Xem thêm')
+    const [loadingStatus, setLoadingStatus] = useState(false)
 
     useEffect(() => {
         fetch('/api/products/getProducts', {
@@ -47,7 +49,7 @@ export default function Homepage() {
               'Accept': 'application/json',
               'Content-Type': 'application/json'
           },
-            body: JSON.stringify({ filter: 'recently' })
+            body: JSON.stringify({ filter: 'recently', limit: '10' })
         })
         .then(res => res.json())
         .then(products => {
@@ -56,25 +58,44 @@ export default function Homepage() {
         .catch(error => console.log(error))
     }, [])
 
+    function handleShowMore() {
+        setLoadingStatus(true)
+        fetch('/api/products/getProducts', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+            body: JSON.stringify({ filter: 'recently' })
+        })
+        .then(res => res.json())
+        .then(products => {
+            setRecentProducts(products)
+            setShowButtonContent('Xem tất cả sản phẩm')
+            setLoadingStatus(false)
+        })
+        .catch(error => console.log(error))
+    }
+
     return (
         <div id="homepage">
             {bestSelling.length !== 0 ? 
             <div id='highlight' >
-                <Carousel autoplay autoplaySpeed={8000} >
+                <Carousel autoplay autoplaySpeed={8000} effect='fade'>
                     {bestSelling.map(item => (
                         <div key={item._id} className='item' onClick={() => navigate('/product', {
                             state: item
                         })}>
                             <img src={item.thumnail} alt='popular item'  />
                             <div className='itemInfo'>
-                                <p style={{ fontWeight: 'bold' }}>{ item.name }</p>
-                                <div className='separator' style={{ backgroundColor: '#52b788' }} />
+                                <h4 style={{ fontWeight: 'bold' }}>{ item.name }</h4>
                                 <p className='itemDescription'>{ item.description.substring(0, 100).concat('...') }</p>
                             </div>
                         </div>
                     ))}
                 </Carousel>
                 <div id='banner'>
+                    <img id='bannerImg' src='banner.png' alt='banner' />
                 </div>
             </div> : <></> }
             <h3 style={{ textAlign: 'left', margin: '1em 0', textDecoration: 'underline' }} >Sản phẩm mới thêm gần đây</h3>
@@ -83,6 +104,7 @@ export default function Homepage() {
                     <Product key={product._id} product={product} />
                 )) }
             </div>
+            <Button size='large' loading={loadingStatus} onClick={handleShowMore} type="default" style={{ marginTop: '3em', outline: 'none' }}>{showButtonContent}</Button>
         </div>
     )
 }

@@ -17,6 +17,7 @@
 }
 
 body {
+  scroll-behavior: smooth;
   position: relative;
   font-family: 'Roboto', sans-serif;
   font-size: larger;
@@ -30,27 +31,35 @@ body {
   100% { opacity: 1; }
 }
 
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
 
 #header {
-  position: -webkit-sticky;
-  position: sticky;
+  position: fixed;
   top: 0;
   z-index: 5;
   background-color: rgb(255, 255, 255, 0.5);
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   display: flex;
   flex-direction: row;
-  height: 10%;
+  height: 10vh;
   width: 100%;
-  padding: 0 20rem;
+  padding: 0.5em 20rem;
+  transition-property: all;
+  transition-duration: 0.2s;
 }
 
 #app, #dashboard {
+  margin-top: 10vh;
   min-height: 90%;
   padding: 1rem 0;
 }
@@ -61,7 +70,7 @@ code {
 
 #footer {
   border-radius: 0.5em;
-  margin-top: 5em;
+  margin-top: 3em;
   width: 100%;
   padding: 1em 20rem;
   min-height: 15%;
@@ -74,10 +83,11 @@ a {
 
 @media screen and (max-width: 1280px) {
   #header {
-    padding: 0 5rem;
+    padding: 0;
   }
   #app {
     margin: 0;
+    margin-top: 10vh;
   }
   #footer {
     padding: 1rem 0;
@@ -88,19 +98,14 @@ a {
   body {
     font-size: larger;
   }
-  #header {
-    padding: 0;
-  }
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 425px) {
   body {
-    font-size: medium;
+    font-size: small;
   }
 
   #app {
-    margin: 1rem 0;
-    padding: 0;
     min-height: 55%;
   }
 

@@ -31,7 +31,7 @@ export default function AddNewCategory() {
             showPopup()
         }
         else {
-            fetch('/api/createCategory', {
+            fetch('/api/category', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

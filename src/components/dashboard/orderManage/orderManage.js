@@ -9,7 +9,7 @@ export default function OrderManage() {
     const [orders, setOrders] = useState([])
 
     useEffect(() => {
-        fetch('/api/orders/getOrders')
+        fetch('/api/orders/')
         .then(res => res.json())
         .then(orders => setOrders(orders))
         .catch(err => console.log(err))

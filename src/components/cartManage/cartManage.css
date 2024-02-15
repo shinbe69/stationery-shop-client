@@ -87,6 +87,8 @@
 }
 
 #paymentInfo {
+    width: 60%;
+    margin: 0 auto;
     display: flex;
 }
 
@@ -97,19 +99,20 @@
 }
 
 #addressConfirm {
-    height: 100%;
-    text-align: left;
-    width: 50%;
+    height: 50%;
+    width: 100%;
     padding: 0.5em;
 }
 
 #paymentMethod {
     padding: 0.5em;
-    width: 30%;
+    width: 100%;
 }
 
 #purchaseContainer {
-    width: 20%;
+    width: 50%;
+    height: 50%;
+    margin: auto 0;
     padding: 0.5em;
 }
 
@@ -120,9 +123,10 @@
 }
 
 #purchase {
+    transition-duration: 0.2s;
     font-size: 1em;
     outline: none;
-    width: fit-content;
+    width: 40%;
     padding: 0.5em;
     border: 1px solid #48b42c;
     background-color: #4be024;
@@ -136,7 +140,7 @@
 #purchase:hover {
     cursor: pointer;
     background-color: #39c215;
-    border-radius: 0.4em;
+    border-radius: 0.5em;
 }
 
 @media screen and (max-width: 1080px) {

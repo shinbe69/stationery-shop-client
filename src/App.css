@@ -4,15 +4,16 @@
 }
 
 #sideMenu {
-    padding: 1em 0.5em ;
-    position: sticky;
-    top: 8%;
+    padding: 0 0.5em;
     border-radius: 0.5em;
     z-index: 4;
     width: 20%;
-    height: 80vh;
-    transition-property: all;
-    transition-duration: 0.4s;
+    min-height: 90vh;
+    animation-duration: 0.4s;
+    align-self: flex-start;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 10vh;
 }
 
 .categoryContainer {
@@ -21,6 +22,7 @@
     grid-template-rows: auto;
     border-radius: 10px;
     background-color: #EEEEEE;
+    padding-top: 1em;
 }
 
 #recentBlogs {
@@ -70,6 +72,7 @@
     width: 80%;
     padding: 0 0.5em;
     position: relative;
+    margin: 0 auto;
 }
 
 #content * {
@@ -246,14 +249,16 @@ select {
     #controlPanel {
         width: 100%;
     }
+    
     #sideMenu {
         background-color: rgb(255, 255, 255, 0.5);
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
-        transform: translateX(-100vw);
-        position: absolute;
+        display: none;
         width: 35vw;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        padding: 0.5em;
+        position: fixed;
     }
 
     #content {
@@ -287,6 +292,7 @@ select {
     #content {
         width: 100%;
         margin: 0;
+        
     }
     #sideMenu {
         width: 100vw;   

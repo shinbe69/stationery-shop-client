@@ -22,9 +22,11 @@
     grid-row: 1;
     text-align: left;
     float: left;
+    margin-bottom: 2em;
 }
 
 .ant-typography {
+    height: fit-content;
     font-size: 1em;
     text-align: left;
 }
@@ -37,7 +39,7 @@
     display: flex;
     height: 10%;
     width: 100%;
-    margin: 2em 0;
+    margin: 1em 0;
 }
 
 #specificInfo {
@@ -51,7 +53,7 @@
     width: 10em;
     height: 3em;
     overflow: hidden;
-    border: 1px solid #48b42c;
+    border: 1px solid #B2BEB5;
     margin: auto 2em;
 }
 
@@ -61,10 +63,18 @@
 
 #selectQuantity div:hover {
     cursor: pointer;
-    background-color: #D8D9DA;
+}
+
+#subtractButton:hover {
+    background-color: #ff5757;
+}
+
+#plusButton:hover {
+    background-color: #39c215;
 }
 
 #addToCartButton {
+    transition-duration: 0.2s;
     display: flex;
     margin: auto 0;
     width: fit-content;
@@ -74,7 +84,7 @@
 }
 
 #addToCartButton:hover {
-    border-radius: 0.5em;
+    border-radius: 0.7em;
     cursor: pointer;
     background-color: #39c215;
 }
@@ -87,25 +97,46 @@
 
 @media screen and (max-width: 970px) {
     #productThumnail {
+        width: 40%;   
+    }
+
+    #productThumnail img {
+        width: 100%;
+        border-radius: 5px;
+    }
+
+    #productInfo {
+        width: 60%;
+        padding: 0 1em;
+    }
+
+}
+
+@media screen and (max-width: 860px) {
+    #productThumnail {
         width: 100%;   
     }
 
     #productThumnail img {
-        width: 80%;
+        width: 95%;
         border-radius: 5px;
     }
 
     #productInfo {
         width: 100%;
     }
-
-}
-
-@media screen and (max-width: 860px) {
+    
     #addToCartSection {
         right: 0;
         width: 100%;
+    }
 
+    .ant-typography {
+        padding: 0 1em;
+    }
+
+    #specificInfo {
+        height: 100%;
     }
 
     #addToCartButton {
@@ -120,5 +151,24 @@
 @media screen and (max-width: 540px) {
     #addToCartButton p {
         display: none;
+    }
+}
+
+@media screen and (max-width: 425px) {
+    .ant-typography {
+        padding: 0;
+    }
+
+    #productInfo {
+        padding: 0;
+    }
+
+    #specificInfo {
+        width: 100%;
+        padding: 0;
+    }
+
+    .ant-typography {
+        padding: 0;
     }
 }

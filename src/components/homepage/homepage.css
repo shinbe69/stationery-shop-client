@@ -1,26 +1,39 @@
-/* #slideShow {
-    position: relative;
-    height: 45vh;
-    border-radius: 30px;
-    margin-bottom: 2rem;
-    overflow: hidden;
-} */
-
 .ant-carousel {
     width: 60%;
-    height: 45vh;
+    height: 100%;
     padding: 0;
     border-radius: 0.5em;
     overflow: hidden;
 }
 
+.ant-btn {
+    animation-name: none;
+    animation-duration: 0ms;
+}
+
 #highlight {
+    height: 45vh;
     display: flex;
 }
 
 #banner {
-    padding: 0 3em;
+    margin: 0 1em;
     width: 40%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#banner:hover {
+    #bannerImg {
+        transform: scale(1.1);
+    }    
+}
+
+#bannerImg {
+    object-fit: cover;
+    transition-duration: 0.2s;
+    width: 100%;
+    height: 45vh;
 }
 
 .ant-carousel * {
@@ -84,9 +97,11 @@
     margin: auto;
     grid-template-rows: auto auto;
     font-size: 1.2em;
+    transition-property: all;
+    transition-duration: 0.5s;
 }
 
-.itemInfo > p {
+.itemInfo > p, .itemInfo > h4 {
     padding: 1rem;
     margin: auto;
 }
@@ -95,8 +110,8 @@
     margin: 0;
     display: grid;
     grid-template-columns: repeat(5, minmax(0, 1fr));
-    column-gap: 2rem;
-    row-gap: 2rem;
+    column-gap: 1rem;
+    row-gap: 1rem;
     transition: all 0.55s;
 }
 
@@ -108,6 +123,11 @@
 @media screen and (max-width: 768px) {
     #highlight {
         display: block;
+        height: fit-content;
+    }
+
+    #banner {
+        margin: 1em 0;
     }
 
     #itemInfo {
@@ -122,11 +142,12 @@
     #recentProducts {
         margin: 1rem 0;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        column-gap: 1rem;
-        row-gap: 1rem;
+        column-gap: 0.75rem;
+        row-gap: 0.75rem;
     }
     .ant-carousel {
         width: 100%;
+        margin: 0 auto;
     }
 
     #banner {
@@ -148,6 +169,8 @@
 
     #recentProducts {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        column-gap: 0.4em;
+        row-gap: 0.75em;
     }
 
     #item img {
@@ -161,14 +184,16 @@
     #itemDescription {
         display: none;
     }
+
+    .itemInfo {
+        top: 70%;
+    }
+    .itemInfo > p {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 320px) {
-    #recentProducts {
-        margin: 1rem;
-        column-gap: 1rem;
-        row-gap: 1rem;
-    }
     #slideShow {
         border-radius: 15px;
     }

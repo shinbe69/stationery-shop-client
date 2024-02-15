@@ -45,7 +45,7 @@ export default function Product({ product }) {
                 <img src={ product.thumnail } alt="thumnail" className="productThumnailImg" />
             </div>
             <div className="productInfo">
-                <p>{ product.name }</p>
+                <h3>{ product.name }</h3>
                 <p style={{ color: '#FF9B9B' }} ><b>{ new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(product.price) }</b></p>
             </div>
             <img onClick={addToCart} className="addToCartButton" src="add-to-cart.png" alt="add-to-cart"/>

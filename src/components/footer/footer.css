@@ -1,24 +1,37 @@
 #footerChild {
-    font-size: large;
+    font-size: medium;
     display: flex;
     padding: 0.2em 0;
     text-align: left;
 }
 
 #footerChild img {
-    width: 5em;
-    height: 5em;
+    width: 4em;
+    height: 4em;
     margin: 0 0.5em;
     object-fit: contain;
 }
 
-#footerChild div {
+.footerInfo {
     width: 50%;
+}
+
+@media screen and (max-width: 1440px) {
+    #footer {
+        padding: 1em 10em;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #footer {
+        padding: 1em 5em;
+    }
 }
 
 @media screen and (max-width: 860px) {
     #footer {
         width: 100%;
+        padding: 1em;
     }
 
     #footer hr {
@@ -26,23 +39,18 @@
     }
 
     #footerChild {
+        font-size: small;
         display: block;
         text-align: center;
         padding: 0.5em 0;
     }
 
-    #footerChild div {
+    .footerInfo {
         width: 100%;
         margin: 1em 0;
     }
 
-    #footerChild div img{
+    #footerChild img{
         margin: auto;
-    }
-}
-
-@media screen and (max-width: 425px) {
-    #footerChild div {
-        font-size: 0.8em;
     }
 }

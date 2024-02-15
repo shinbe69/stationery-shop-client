@@ -4,9 +4,9 @@ import { useEffect } from 'react'
 
 export default function Login() {
 
-    useEffect(() => {
-        document.getElementById('sideMenuSwitch').style.display = 'none'
-    }, [])
+    // useEffect(() => {
+    //     document.getElementById('sideMenuSwitch').style.display = 'none'
+    // }, [])
 
     return (
         <div id='login'>
